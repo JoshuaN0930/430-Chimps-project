@@ -60,7 +60,7 @@ class Token:
 
 #controls how a token is displayed when printed
 #returns the token type name followed by "Token", example + -> PlusToken
-    def repr(self):
+    def __repr__(self):
         if self.type in (TokenType.IDENTIFIER, TokenType.INTEGER):
             return f"{self.type.name}({self.value})"
         if self.value in Keyword.WORDS:
