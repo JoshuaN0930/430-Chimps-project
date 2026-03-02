@@ -20,11 +20,19 @@ def tokenize(source: str) -> list [Token]:
             i += 1
             continue
 
+        #check for double char sybols like == and !=
+        twoCh = source[i:i+2]
+        if twoCh in Symbol.DOUBLE:
+            tokens.append(Token(Symbol.DOUBLE[twoCh], twoCh, line))
+            i += 2
+            continue
+
         #chekng single-char symbols look it in symbol.single 
-        if ch in Symbol.SINGLE:
+        elif ch in Symbol.SINGLE:
             tokens.append(Token(Symbol.SINGLE[ch], ch, line))
             i += 1
             continue
+
 
         #handel keywords (keywords and identifiers)
         if ch.isalpha():
@@ -47,5 +55,5 @@ def tokenize(source: str) -> list [Token]:
 
         #for unknown char 
         raise ValueError(f"unexpected char '{ch}' at line {line}")
-    
+
     return tokens
