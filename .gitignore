@@ -4,5 +4,9 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Lexer pycache
-src/lexer/__pycache__/
+# Coverage
+.coverage
+htmlcov/
+
+# Pytest
+.pytest_cache/
