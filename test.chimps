@@ -1,3 +1,7 @@
-(vardec int x)
-(assign x 5)
-(assign x (+ x 1))
+(- x y)
+(+ x y)
+(/ x y)
+(* x y)
+(== x y)
+(!= x y)
+
