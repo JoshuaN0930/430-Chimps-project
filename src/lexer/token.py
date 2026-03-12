@@ -15,6 +15,8 @@ class TokenType(Enum):
     #symbols
     LParen = auto()
     RParen = auto ()
+    ADDRESS = auto()
+    DOT = auto()
 
     #keywords
     VARDEC = auto()
@@ -23,6 +25,20 @@ class TokenType(Enum):
     PRINTLN = auto()
     IDENTIFIER = auto()
     INTEGER = auto()
+
+    TRUE = auto()
+    FALSE = auto()
+
+    WHILE = auto()
+    IF = auto()
+    RETURN = auto()
+    BLOCK = auto()
+    STMT = auto()
+    VOID = auto()
+    STRUCT = auto()
+    FUNC = auto()
+    CALL = auto()
+    NULL = auto()
 
 
 
@@ -34,8 +50,9 @@ class Symbol:
         '-' :TokenType.Minus,
         '*' :TokenType.Star,
         '/' :TokenType.Division,
-        '<' :TokenType.LessThan
-
+        '<' :TokenType.LessThan,
+        '&' : TokenType.ADDRESS, # address of
+        '.' : TokenType.DOT      # field access
     }
 
     DOUBLE = {
@@ -48,7 +65,20 @@ class Keyword:
         'int' :TokenType.INT,
         'vardec' :TokenType.VARDEC,
         'assign' :TokenType.ASSIGN,
-        'println' :TokenType.PRINTLN
+        'println' :TokenType.PRINTLN,
+
+        'true': TokenType.TRUE,
+        'false': TokenType.FALSE,
+        'while': TokenType.WHILE,      # while statement
+        'if': TokenType.IF,            # if statement
+        'block': TokenType.BLOCK,      # block statement
+        'return': TokenType.RETURN,    # return statement
+        'stmt': TokenType.STMT,
+        'void': TokenType.VOID,
+        'struct': TokenType.STRUCT,
+        'func': TokenType.FUNC,
+        'call': TokenType.CALL,
+        'null': TokenType.NULL
 
     }
 

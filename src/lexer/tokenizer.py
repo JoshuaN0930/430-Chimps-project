@@ -35,9 +35,9 @@ def tokenize(source: str) -> list [Token]:
 
 
         #handel keywords (keywords and identifiers)
-        if ch.isalpha():
+        if ch.isalpha() or ch == '_':
             start = i
-            while i < len(source) and source[i].isalpha():
+            while i < len(source) and (source[i].isalnum() or source[i] == "_"):
                 i += 1
             word = source[start:i]
             token_type = Keyword.WORDS.get(word, TokenType.IDENTIFIER)
