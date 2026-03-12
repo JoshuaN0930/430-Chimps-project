@@ -50,7 +50,7 @@ def tokenize(source: str) -> list [Token]:
             while i < len(source) and source[i].isdigit():
                 i += 1
             number = source[start:i]
-            tokens.append(Token(TokenType.INTEGER, number, line))
+            tokens.append(Token(TokenType.INTEGER, int(number), line))
             continue
 
         #for unknown char 

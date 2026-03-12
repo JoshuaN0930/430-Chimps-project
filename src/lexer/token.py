@@ -85,7 +85,7 @@ class Keyword:
 @dataclass
 class Token:
     type: TokenType
-    value: str
+    value: str | int
     line: int
 
 #controls how a token is displayed when printed
