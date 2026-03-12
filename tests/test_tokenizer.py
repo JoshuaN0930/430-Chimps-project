@@ -2,26 +2,6 @@ import pytest
 from src.lexer.token import TokenType, Symbol, Keyword
 from src.lexer.tokenizer import tokenize
 
-#test for '-'
-def test_minus():
-    tokens = tokenize('-')
-
-    assert len(tokens) == 1
-    assert tokens[0].type == TokenType.Minus
-
-#test for '!='
-def test_notEqual():
-    tokens = tokenize('!=')
-
-    assert len(tokens) == 1
-    assert tokens[0].type == TokenType.NEQ
-
-#test for 'int' keyword
-def test_int():
-    tokens = tokenize('int')
-
-    assert len(tokens) == 1
-    assert tokens[0].type == TokenType.INT
 
 #test for detecting whitespace 
 def test_whiteSpace():
@@ -36,6 +16,15 @@ def test_integerLit():
     assert len(tokens) == 1
     assert tokens[0].type == TokenType.INTEGER
     assert tokens[0].value == 34
+
+#test for indentifier tokens
+def test_identifier():
+    tokens = tokenize('x')
+
+    assert len(tokens) == 1
+    assert tokens[0].type ==TokenType.IDENTIFIER
+    assert tokens[0].value == "x"
+
 
 # Runs a test on each single symbol found in token.py
 @pytest.mark.parametrize("input_symbol, expected", Symbol.SINGLE.items())
