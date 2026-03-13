@@ -34,3 +34,20 @@ def test_single_symbols(input_symbol, expected):
     assert tokens[0].type == expected
     assert tokens[0].value == input_symbol
     assert tokens[0].line == 1
+
+# Test on double symbols in token.py
+@pytest.mark.parametrize("input_symbol, expected", Symbol.DOUBLE.items())
+def test_double_symbols(input_symbol, expected):
+    tokens = tokenize(input_symbol)
+    assert len(tokens) == 1
+    assert tokens[0].type == expected
+    assert tokens[0].value == input_symbol
+    assert tokens[0].line == 1
+
+@pytest.mark.parametrize("input_keyword, expected", Keyword.WORDS.items())
+def test_keywords(input_keyword, expected):
+    tokens = tokenize(input_keyword)
+    assert len(tokens) == 1
+    assert tokens[0].type == expected
+    assert tokens[0].value == input_keyword
+    assert tokens[0].line == 1
