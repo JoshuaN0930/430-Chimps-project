@@ -14,8 +14,12 @@ def format_ast(node, indent=0):
                 for item in val:
                     lines.append(format_ast(item, indent + 2))
             elif is_dataclass(val):
-                lines.append(f"{pad}  {f.name}:")
-                lines.append(format_ast(val, indent + 2))
+                formatted = format_ast(val, 0)
+                if '\n' not in formatted:
+                    lines.append(f"{pad}  {f.name}: {formatted.strip()}")
+                else:
+                    lines.append(f"{pad}  {f.name}:")
+                    lines.append(format_ast(val, indent + 2))
             else:
                 lines.append(f"{pad}  {f.name}: {val!r}")
         return "\n".join(lines)
