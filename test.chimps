@@ -1,6 +1,6 @@
-(- x y)
-(+ x y)
-(/ x y)
-(* x y)
-(== x y)
-(!= x y)
+(struct Node (int value))
+(func add ((int x) (int y)) int
+    (vardec int result)
+)
+(vardec int x)
+(vardec int y)
