@@ -27,13 +27,75 @@ class Param:
     type: Type
     name: str
 
-#--stmt--
+############ Statements ############
 @dataclass 
 class VarDec:
     type: Type
     name: str
 
-Stmt = VarDec
+@dataclass
+class Assign:
+    lhs: "Lhs"
+    exp: "Exp"
+
+@dataclass
+class While:
+    exp: "Exp"
+    stmt: "Stmt"
+
+@dataclass
+class If:
+    exp: "Exp"
+    then_stmt: "Stmt"
+    else_stmt: "Stmt | None"
+
+@dataclass
+class Return:
+    exp: "Exp | None"
+
+@dataclass
+class Block:
+    stmt: list["Stmt"]
+
+@dataclass
+class Println:
+    exp: "Exp"
+
+@dataclass
+class ExprStmt:
+    exp: "Exp"
+
+Stmt = VarDec | Assign | While | If | Return | Block | Println | ExprStmt
+
+
+############ Left Hand Side (Assignments) ############
+@dataclass
+class VarAssign:
+    var: str
+
+@dataclass
+class FieldStructAssign:
+    lhs: "Lhs"
+    var: str
+
+@dataclass
+class AssignToAddress:
+    lhs: "Lhs"
+
+Lhs = VarAssign | FieldStructAssign | AssignToAddress
+
+
+############ Expressions ############
+@dataclass
+class IntLiteral:
+    int_value: int
+
+@dataclass
+class BooleanLiteral:
+    boolean: bool
+
+Exp = IntLiteral | BooleanLiteral
+
 
 #--struct--
 @dataclass
