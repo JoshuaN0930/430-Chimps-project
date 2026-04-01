@@ -29,43 +29,43 @@ class Param:
 
 ############ Statements ############
 @dataclass 
-class VarDec:
+class VarDecStmt:
     type: Type
     name: str
 
 @dataclass
-class Assign:
+class AssignStmt:
     lhs: "Lhs"
     exp: "Exp"
 
 @dataclass
-class While:
+class WhileStmt:
     exp: "Exp"
     stmt: "Stmt"
 
 @dataclass
-class If:
+class IfStmt:
     exp: "Exp"
     then_stmt: "Stmt"
     else_stmt: "Stmt | None"
 
 @dataclass
-class Return:
+class ReturnStmt:
     exp: "Exp | None"
 
 @dataclass
-class Block:
+class BlockStmt:
     stmt: list["Stmt"]
 
 @dataclass
-class Println:
+class PrintlnStmt:
     exp: "Exp"
 
 @dataclass
 class ExprStmt:
     exp: "Exp"
 
-Stmt = VarDec | Assign | While | If | Return | Block | Println | ExprStmt
+Stmt = VarDecStmt | AssignStmt | WhileStmt | IfStmt | ReturnStmt | BlockStmt | PrintlnStmt | ExprStmt
 
 
 ############ Left Hand Side (Assignments) ############
@@ -87,14 +87,14 @@ Lhs = VarAssign | FieldStructAssign | AssignToAddress
 
 ############ Expressions ############
 @dataclass
-class IntLiteral:
+class IntLiteralExp:
     int_value: int
 
 @dataclass
-class BooleanLiteral:
+class BooleanLiteralExp:
     boolean: bool
 
-Exp = IntLiteral | BooleanLiteral
+Exp = IntLiteralExp | BooleanLiteralExp
 
 
 #--struct--

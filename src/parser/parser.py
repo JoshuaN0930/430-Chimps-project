@@ -135,6 +135,18 @@ class Parser:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     
     """
         Statement Parsing
@@ -170,7 +182,27 @@ class Parser:
         self.consume(TokenType.RParen)
         return VarDec(type=type_node, name=name_tok.value)
     
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     """
         Program  Parsing
         program ::= structdef* fdef* stmt* - stmt* is the entry point
