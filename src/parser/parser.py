@@ -5,7 +5,7 @@ from src.parser.nodes import (
     IntType, VoidType, StructType, PointerType, Type,
     Param, StructDef, FuncDef,
     Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
-    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt
+    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt
 )
 
 class ParserError(Exception):
@@ -242,11 +242,11 @@ class Parser:
             TokenType.VARDEC: self.parse_vardec,
             TokenType.ASSIGN: self.parse_assign,
             TokenType.WHILE: self.parse_while,
-            TokenType.IF: self.parse_if
-            # TokenType.RETURN: [self.parse_return],
-            # TokenType.BLOCK: [self.parse_block],
-            # TokenType.PRINTLN: [self.parse_println],
-            # TokenType.STMT: [self.parse_expstmt]
+            TokenType.IF: self.parse_if,
+            TokenType.RETURN: self.parse_return,
+            TokenType.BLOCK: self.parse_block,
+            TokenType.PRINTLN: self.parse_println,
+            TokenType.STMT: self.parse_exp_stmt
         }
         if head.type in stmt_dict:
             return stmt_dict[head.type]()
@@ -301,7 +301,52 @@ class Parser:
         self.consume(TokenType.RParen)
         return IfStmt(exp=exp, then_stmt=then_stmt, else_stmt=else_stmt)
 
+    """
+        stmt ::= (return [exp])
+    """
 
+    def parse_return(self) -> ReturnStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.RETURN)
+        if self.peek().type == TokenType.RParen:
+            exp = None
+        else:
+            exp = self.parse_exp()
+        self.consume(TokenType.RParen)
+        return ReturnStmt(exp=exp)
+
+    """
+        stmt ::= (block stmt*)
+    """
+    def parse_block(self) -> BlockStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.BLOCK)
+        stmts = []
+        while self.peek().type != TokenType.RParen:
+            stmts.append(self.parse_stmt())
+
+        self.consume(TokenType.RParen)
+        return BlockStmt(stmt=stmts)
+
+    """
+        stmt ::= (println exp)
+    """
+    def parse_println(self) -> PrintlnStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.PRINTLN)
+        exp = self.parse_exp()
+        self.consume(TokenType.RParen)
+        return PrintlnStmt(exp=exp)
+
+    """
+        stmt ::= (stmt exp)
+    """
+    def parse_exp_stmt(self) -> ExpStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.STMT)
+        exp = self.parse_exp()
+        self.consume(TokenType.RParen)
+        return ExpStmt(exp=exp)
 
 
 

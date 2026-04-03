@@ -62,10 +62,10 @@ class PrintlnStmt:
     exp: "Exp"
 
 @dataclass
-class ExprStmt:
+class ExpStmt:
     exp: "Exp"
 
-Stmt = VarDecStmt | AssignStmt | WhileStmt | IfStmt | ReturnStmt | BlockStmt | PrintlnStmt | ExprStmt
+Stmt = VarDecStmt | AssignStmt | WhileStmt | IfStmt | ReturnStmt | BlockStmt | PrintlnStmt | ExpStmt
 
 
 ############ Left Hand Side (Assignments) ############
