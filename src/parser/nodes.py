@@ -94,7 +94,15 @@ class IntLiteralExp:
 class BooleanLiteralExp:
     boolean: bool
 
-Exp = IntLiteralExp | BooleanLiteralExp
+@dataclass
+class LhsExp:
+    lhs:"Lhs"
+
+@dataclass
+class NullExp:
+    pass
+
+Exp = IntLiteralExp | BooleanLiteralExp | LhsExp | NullExp
 
 
 #--struct--

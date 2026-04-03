@@ -24,6 +24,7 @@ class TokenType(Enum):
     ASSIGN = auto()
     PRINTLN = auto()
     IDENTIFIER = auto()
+    # INTEGER USED FOR LITERALS
     INTEGER = auto()
 
     TRUE = auto()

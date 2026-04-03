@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from typing import List 
+from typing import List
 from src.lexer.token import Token, TokenType
 from src.parser.nodes import (
     IntType, VoidType, StructType, PointerType, Type,
     Param, StructDef, FuncDef,
-    VarDec, Program
+    Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
+    IntLiteralExp, NullExp, LhsExp, WhileStmt
 )
 
 class ParserError(Exception):
@@ -131,23 +132,93 @@ class Parser:
         self.consume(TokenType.RParen)
         return FuncDef(name=name_tok.value, params=params, Rtype=token_type, body=body)
 
+    """
+     ##################### Left Hand Side Parsing #####################
+    """
+
+    def parse_lhs(self) -> Lhs:
+        token = self.peek()
+
+        if token.type == TokenType.IDENTIFIER:
+            self.consume(TokenType.IDENTIFIER)
+            return VarAssign(token.value)
+
+        elif token.type == TokenType.LParen:
+            self.consume(TokenType.LParen)
+
+            if self.peek().type == TokenType.DOT:
+                self.consume(TokenType.DOT)
+                inner = self.parse_lhs()
+                field_value = self.consume(TokenType.IDENTIFIER)
+                self.consume(TokenType.RParen)
+                return FieldStructAssign(var= field_value.value, lhs=inner)
+
+            elif self.peek().type == TokenType.Star:
+                self.consume(TokenType.Star)
+                inner = self.parse_lhs()
+                self.consume(TokenType.RParen)
+                return AssignToAddress(lhs=inner)
+
+            raise ParserError(
+                f"Expected '.' or '*' after '(', got {self.peek().type.name}",
+                self.peek().line
+            )
+
+        raise ParserError(
+            f"Expected a LHS , got {token.type.name}",
+            token.line
+        )
+    """
+    ##############################################################
+    """
 
 
+    """
+    ##################### Expression Parsing #####################
+    """
 
+    def parse_exp(self) -> Exp:
+        token = self.peek()
 
+        if token.type == TokenType.INTEGER:
+            self.consume(TokenType.INTEGER)
+            return IntLiteralExp(int_value= token.value)
 
+        elif token.type == TokenType.TRUE:
+            self.consume(TokenType.TRUE)
+            return BooleanLiteralExp(boolean=True)
 
+        elif token.type == TokenType.FALSE:
+            self.consume(TokenType.FALSE)
+            return BooleanLiteralExp(boolean=False)
 
+    ################### LHS Expression ###################:
+        elif token.type == TokenType.IDENTIFIER:
+            return LhsExp(lhs=self.parse_lhs())
 
+        elif token.type == TokenType.LParen:
+            if self.pos + 1 >= len(self.tokens):
+                raise ParserError("Unexpected end of input in expression", token.line)
+            next_token = self.tokens[self.pos + 1]
+            if next_token.type == TokenType.DOT or next_token.type == TokenType.Star:
+                return LhsExp(lhs=self.parse_lhs())
+            raise ParserError(
+                f"Unknown parenthesized expression starting with {next_token.type.name}",
+                next_token.line
+            )
+    ######################################################
 
+        elif token.type == TokenType.NULL:
+            self.consume(TokenType.NULL)
+            return NullExp()
+        raise ParserError(
+            f"Expected an expression , got {token.type.name}",
+            token.line
+        )
+    """
+    ###################################################################
+    """
 
-
-
-
-
-
-
-    
     """
         Statement Parsing
         stmt ::= (vardec type var) - variable decclaration
@@ -166,21 +237,50 @@ class Parser:
         
         head = self.tokens[self.pos + 1]
 
-        if head.type == TokenType.VARDEC:
-            return self.parse_vardec()
+        # Statement Dictionary
+        stmt_dict = {
+            TokenType.VARDEC: self.parse_vardec,
+            TokenType.ASSIGN: self.parse_assign
+            # TokenType.WHILE: [self.parse_while],
+            # TokenType.IF: [self.parse_if],
+            # TokenType.RETURN: [self.parse_return],
+            # TokenType.BLOCK: [self.parse_block],
+            # TokenType.PRINTLN: [self.parse_println],
+            # TokenType.STMT: [self.parse_expstmt]
+        }
+        if head.type in stmt_dict:
+            return stmt_dict[head.type]()
         
         raise ParserError(f"Unknown statement '{head.value}'", head.line)
 
     """
         stmt ::= (vardec type var) 
     """
-    def parse_vardec(self) -> VarDec:
+    def parse_vardec(self) -> VarDecStmt:
         self.consume(TokenType.LParen)
         self.consume(TokenType.VARDEC)
         type_node = self.parse_type()
         name_tok = self.consume(TokenType.IDENTIFIER)
         self.consume(TokenType.RParen)
-        return VarDec(type=type_node, name=name_tok.value)
+        return VarDecStmt(type=type_node, name=name_tok.value)
+
+    """
+        stmt ::= (assign lhs exp)
+    """
+    def parse_assign(self) -> AssignStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.ASSIGN)
+        lhs = self.parse_lhs()
+        exp = self.parse_exp()
+        self.consume(TokenType.RParen)
+        return AssignStmt(lhs= lhs, exp= exp)
+
+    """
+        stmt ::= (while exp stmt)
+    """
+
+    # def parse_while(self) -> WhileStmt:
+    #     return WhileStmt(exp=, stmt=)
     
 
 
@@ -224,3 +324,7 @@ class Parser:
             else :
                 stmts.append(self.parse_stmt())
         return Program(structs=structs, funcs=funcs, stmts=stmts)
+
+
+
+
