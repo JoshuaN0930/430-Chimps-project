@@ -5,7 +5,7 @@ from src.parser.nodes import (
     IntType, VoidType, StructType, PointerType, Type,
     Param, StructDef, FuncDef,
     Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
-    IntLiteralExp, NullExp, LhsExp, WhileStmt
+    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt
 )
 
 class ParserError(Exception):
@@ -240,9 +240,9 @@ class Parser:
         # Statement Dictionary
         stmt_dict = {
             TokenType.VARDEC: self.parse_vardec,
-            TokenType.ASSIGN: self.parse_assign
-            # TokenType.WHILE: [self.parse_while],
-            # TokenType.IF: [self.parse_if],
+            TokenType.ASSIGN: self.parse_assign,
+            TokenType.WHILE: self.parse_while,
+            TokenType.IF: self.parse_if
             # TokenType.RETURN: [self.parse_return],
             # TokenType.BLOCK: [self.parse_block],
             # TokenType.PRINTLN: [self.parse_println],
@@ -278,10 +278,28 @@ class Parser:
     """
         stmt ::= (while exp stmt)
     """
+    def parse_while(self) -> WhileStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.WHILE)
+        exp = self.parse_exp()
+        stmt = self.parse_stmt()
+        self.consume(TokenType.RParen)
+        return WhileStmt(exp=exp, stmt=stmt)
 
-    # def parse_while(self) -> WhileStmt:
-    #     return WhileStmt(exp=, stmt=)
-    
+    """
+        stmt ::= (if exp stmt [stmt])
+    """
+    def parse_if(self) -> IfStmt:
+        self.consume(TokenType.LParen)
+        self.consume(TokenType.IF)
+        exp = self.parse_exp()
+        then_stmt = self.parse_stmt()
+        if not self.at_end() and self.peek().type == TokenType.LParen:
+            else_stmt = self.parse_stmt()
+        else:
+            else_stmt = None
+        self.consume(TokenType.RParen)
+        return IfStmt(exp=exp, then_stmt=then_stmt, else_stmt=else_stmt)
 
 
 
