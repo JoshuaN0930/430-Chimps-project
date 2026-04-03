@@ -3,7 +3,7 @@ from typing import List
 from src.lexer.token import Token, TokenType
 from src.parser.nodes import (
     IntType, VoidType, StructType, PointerType, Type,
-    Param, StructDef, FuncDef,
+    Param, StructDef, FuncDef, Stmt,
     Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
     IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt
 )
@@ -24,15 +24,15 @@ class Parser:
     def peek(self) -> Token:
         return self.tokens[self.pos]
     
+    #look at keyword
+    def peek_keyword(self) -> Token:
+        return self.tokens[self.pos + 1].type
+    
     #"Grab the current token and advance pos by 1
     def consume(self, expected: TokenType = None) -> Token:
         token = self.tokens[self.pos]
         if expected and token.type != expected:
-            raise ParserError(
-                f"Expected {expected.name}, got  {token.type.name}",
-                token.line
-            )
-        
+            return None
         self.pos += 1
         return token
     
@@ -65,13 +65,19 @@ class Parser:
         elif token.type == TokenType.LParen:
             #(* type)
             self.consume(TokenType.LParen)
-            self.consume(TokenType.Star)
+
+            if not self.consume(TokenType.Star):
+                raise ParserError("expected '*' for pointer type", self.peek().line)
+            
             inner = self.parse_type()
-            self.consume(TokenType.RParen)
+
+            if not self.consume(TokenType.RParen):
+                raise ParserError("missing closing ')' in pointer type", self.peek().line)
+            
             return PointerType(inner=inner)
         
         raise ParserError(
-            f"Expected a type , got {token.type.name}",
+            f"'{token.value}' is not a valid type: expected int, void, struc name, or (* type) pointer",
             token.line
         )
     
@@ -80,57 +86,105 @@ class Parser:
         param :: = `(` type var `)`
     """
     def parse_param(self):
-        self.consume(TokenType.LParen)
+        if not self.consume(TokenType.LParen):
+            raise ParserError("missing opening '(' in parameter", self.peek().line)
+        
         type_node = self.parse_type()
         name_tok = self.consume(TokenType.IDENTIFIER)
-        self.consume(TokenType.RParen)
-
+        if not name_tok:
+            raise ParserError("missing parameter name", self.peek().line)
+        
+        if not self.consume(TokenType.RParen):
+            raise ParserError("missing closing ')' in parameter", self.peek().line)
+        
         return Param(type=type_node, name=name_tok.value)
-    
 
     """
         Structure Parsing
         structdef ::= `(` `struct` structname param* `)`
     """
     def parse_struct(self):
-        self.consume(TokenType.LParen)
-        self.consume(TokenType.STRUCT)
+        if not self.consume(TokenType.LParen):
+            raise ParserError("missing opening '(' in struct definition", self.peek().line)
+        
+        if not self.consume(TokenType.STRUCT):
+            raise ParserError("expected 'struct' keyword", self.peek().line)
+
         name_tok = self.consume(TokenType.IDENTIFIER)
+        if not name_tok:
+            raise ParserError("expected struct name after 'struct'", self.peek().line)
         
         params = [] 
         while self.peek().type != TokenType.RParen:
+            if self.at_end():
+                raise ParserError("missing closing ')' in struct definition", self.peek().line)
             params.append(self.parse_param())
         
-        self.consume(TokenType.RParen)
+        if not self.consume(TokenType.RParen):
+            raise ParserError("missing closing ')' in struct definition", self.peek().line)
+                
         return StructDef(name=name_tok.value, params=params)
+    
+    def parse_structDefs(self) -> list[StructDef]:
+        result = []
+        while self.peek().type == TokenType.LParen:
+            if self.peek_keyword() == TokenType.STRUCT:
+                result.append(self.parse_struct())
+            else: 
+                break 
+        return result
     
 
     """
         Fucntion Parsing
         fdef ::= `(` `func` funcname `(` param* `)` type stmt* `)`
     """
-    def parse_funcs(self):
-        self.consume(TokenType.LParen)
-        self.consume(TokenType.FUNC)
+    def parse_func(self):
+        if not self.consume(TokenType.LParen):
+            raise ParserError("missing opening '(' in function definition", self.peek().line)
+        
+        if not self.consume(TokenType.FUNC):
+            raise ParserError("expected 'func' keyword", self.peek().line)
+        
         name_tok = self.consume(TokenType.IDENTIFIER)
-
-        self.consume(TokenType.LParen)
+        if not name_tok:
+            raise ParserError("expected function name after 'func'", self.peek().line)
+        
+        if not self.consume(TokenType.LParen):
+            raise ParserError("missing opening '(' in parameter list", self.peek().line)
+        
         params = []
         while self.peek().type != TokenType.RParen:
+            if self.at_end():
+                raise ParserError("missing closing ')' in parameter list", self.peek().line)
             params.append(self.parse_param())
-        self.consume(TokenType.RParen)
 
+        if not self.consume(TokenType.RParen):
+            raise ParserError("missing closing ')' in paramter list", self.peek().line)
+        
         token_type = self.parse_type()
 
         body = []
         while self.peek().type != TokenType.RParen:
             if self.at_end():
-                raise ParserError("Unexpected EOF inside function body", self.peek().line)
-            
+                raise ParserError("missing closing ')' in function body", self.peek().line)
             body.append(self.parse_stmt())
+
+        if not self.consume(TokenType.RParen):
+            raise ParserError("missing closing ')' in function body", self.peek().line)
         
-        self.consume(TokenType.RParen)
         return FuncDef(name=name_tok.value, params=params, Rtype=token_type, body=body)
+    
+    def parse_funcDefs(self) -> list[FuncDef]:
+        result = []
+        while self.peek().type == TokenType.LParen:
+            if self.peek_keyword() == TokenType.STRUCT:
+                raise ParserError("struct definitions come before functions", self.peek().line)
+            elif self.peek_keyword() == TokenType.FUNC:
+                result.append(self.parse_func())
+            else:
+                break
+        return result
 
     """
      ##################### Left Hand Side Parsing #####################
@@ -347,6 +401,18 @@ class Parser:
         exp = self.parse_exp()
         self.consume(TokenType.RParen)
         return ExpStmt(exp=exp)
+    
+    def parse_stmts(self) -> list[Stmt]:
+        result = []
+        while not self.at_end():
+            if self.peek().type == TokenType.LParen:
+                if self.peek_keyword() == TokenType.STRUCT:
+                    raise ParserError("struct definitions must come before statements", self.peek().line)
+                if self.peek_keyword() == TokenType.FUNC:
+                    raise ParserError("functions definitions must come before statemets", self.peek().line)
+            result.append(self.parse_stmt())
+        return result
+
 
 
 
@@ -371,21 +437,9 @@ class Parser:
         program ::= structdef* fdef* stmt* - stmt* is the entry point
     """
     def parse_program(self) -> Program:
-        structs = []
-        funcs = []
-        stmts = []
-        
-        while not self.at_end():
-            next_tok = self.tokens[self.pos + 1]
-
-            if next_tok.type == TokenType.STRUCT:
-                structs.append(self.parse_struct())
-
-            elif next_tok.type == TokenType.FUNC:
-                funcs.append(self.parse_funcs())
-
-            else :
-                stmts.append(self.parse_stmt())
+        structs = self.parse_structDefs()
+        funcs = self.parse_funcDefs()
+        stmts = self.parse_stmts()
         return Program(structs=structs, funcs=funcs, stmts=stmts)
 
 

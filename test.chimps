@@ -1,6 +1,2 @@
-(struct Node (int value))
-(func add ((int x) (int y)) int
-    (vardec int result)
-)
 (vardec int x)
-(vardec int y)
+(assign x 5)

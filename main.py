@@ -39,6 +39,10 @@ print("--- tokens ---")
 print(tokens)
 
 parser = Parser(tokens)
-result = parser.parse_program()
-print("--- AST ---")
-print(format_ast(result))
+try:
+    result = parser.parse_program()
+    print("--- AST ---")
+    print(format_ast(result))
+except Exception as e:
+    print(f"Parse Error: {e}")
+    exit(1)
