@@ -5,7 +5,8 @@ from src.parser.nodes import (
     IntType, VoidType, StructType, PointerType, Type,
     Param, StructDef, FuncDef, Stmt,
     Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
-    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt
+    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt, AddressOfExp,
+    DerefExp, BinaryOpExp, MultiplyOp, AddOp, MinusOp, FunctionCallExp
 )
 
 class ParserError(Exception):
@@ -254,8 +255,65 @@ class Parser:
             if self.pos + 1 >= len(self.tokens):
                 raise ParserError("Unexpected end of input in expression", token.line)
             next_token = self.tokens[self.pos + 1]
-            if next_token.type == TokenType.DOT or next_token.type == TokenType.Star:
+
+            if next_token.type == TokenType.DOT:
                 return LhsExp(lhs=self.parse_lhs())
+
+            if next_token.type == TokenType.Star:
+                save = self.pos
+                try:
+                    return LhsExp(lhs=self.parse_lhs())
+                except ParserError:
+                    self.pos = save
+
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.Star)
+
+                first = self.parse_exp()
+
+                if self.peek().type == TokenType.RParen:
+                    self.consume(TokenType.RParen)
+                    return DerefExp(exp=first)
+
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= MultiplyOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.ADDRESS:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.ADDRESS)
+                lhs = self.parse_lhs()
+                self.consume(TokenType.RParen)
+                return AddressOfExp(lhs=lhs)
+
+            elif next_token.type == TokenType.Plus:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.Plus)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= AddOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.Minus:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.Minus)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= MinusOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.CALL:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.CALL)
+                func_name = self.consume(TokenType.IDENTIFIER)
+
+                exps = []
+                while self.peek().type != TokenType.RParen:
+                    exps.append(self.parse_exp())
+
+                self.consume(TokenType.RParen)
+                return FunctionCallExp(func_name= func_name.value, exp= exps)
+
             raise ParserError(
                 f"Unknown parenthesized expression starting with {next_token.type.name}",
                 next_token.line
@@ -265,10 +323,12 @@ class Parser:
         elif token.type == TokenType.NULL:
             self.consume(TokenType.NULL)
             return NullExp()
+
         raise ParserError(
             f"Expected an expression , got {token.type.name}",
             token.line
         )
+
     """
     ###################################################################
     """
@@ -412,24 +472,6 @@ class Parser:
                     raise ParserError("functions definitions must come before statemets", self.peek().line)
             result.append(self.parse_stmt())
         return result
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     """

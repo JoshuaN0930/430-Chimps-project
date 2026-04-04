@@ -85,6 +85,27 @@ class AssignToAddress:
 Lhs = VarAssign | FieldStructAssign | AssignToAddress
 
 
+############ Operators ############
+@dataclass
+class AddOp:
+    pass
+
+@dataclass
+class MinusOp:
+    pass
+
+@dataclass
+class MultiplyOp:
+    pass
+
+Op = AddOp | MinusOp | MultiplyOp
+
+
+
+
+
+
+
 ############ Expressions ############
 @dataclass
 class IntLiteralExp:
@@ -102,7 +123,26 @@ class LhsExp:
 class NullExp:
     pass
 
-Exp = IntLiteralExp | BooleanLiteralExp | LhsExp | NullExp
+@dataclass
+class AddressOfExp:
+    lhs: Lhs
+
+@dataclass
+class DerefExp:
+    exp: Exp
+
+@dataclass
+class BinaryOpExp:
+    op: Op
+    first_exp: Exp
+    second_exp: Exp
+
+@dataclass
+class FunctionCallExp:
+    func_name: str
+    exp: list["Exp"]
+
+Exp = IntLiteralExp | BooleanLiteralExp | LhsExp | NullExp | AddressOfExp | DerefExp | BinaryOpExp | FunctionCallExp
 
 
 #--struct--
