@@ -128,7 +128,7 @@ class Parser:
     
     def parse_structDefs(self) -> list[StructDef]:
         result = []
-        while self.peek().type == TokenType.LParen:
+        while not self.at_end() and self.peek().type == TokenType.LParen:
             if self.peek_keyword() == TokenType.STRUCT:
                 result.append(self.parse_struct())
             else: 
@@ -178,7 +178,7 @@ class Parser:
     
     def parse_funcDefs(self) -> list[FuncDef]:
         result = []
-        while self.peek().type == TokenType.LParen:
+        while not self.at_end() and self.peek().type == TokenType.LParen:
             if self.peek_keyword() == TokenType.STRUCT:
                 raise ParserError("struct definitions come before functions", self.peek().line)
             elif self.peek_keyword() == TokenType.FUNC:
