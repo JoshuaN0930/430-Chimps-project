@@ -72,6 +72,23 @@ def test_func_def():
     ]
 
 """
+    test for lhs:: = var
+                    (. lhs var)
+                    (* lhs)
+"""
+
+@pytest.mark.parametrize("source, expected", [
+    ("x", VarAssign(var="x")),
+    ("(. x field)", FieldStructAssign(lhs=VarAssign(var="x"), var="field")), 
+    ("(* x)", AssignToAddress(lhs=VarAssign(var="x")))
+], ids=["lhs var", "lhs field struct", "lhs address"])
+def test_lhs(source, expected):
+    tokens = tokenize(source)
+    parser = Parser(tokens)
+    result = parser.parse_lhs()
+    assert result == expected
+
+"""
     test for rule stmt::= (vardec type var)
 """
 
@@ -84,4 +101,6 @@ def test_func_def():
 def test_vardec(source, expected):
     result = parse(source)
     assert result.stmts == [expected]
+
+
 
