@@ -6,7 +6,7 @@ from src.parser.nodes import (
     Param, StructDef, FuncDef, Stmt,
     Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
     IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt, AddressOfExp,
-    DerefExp, BinaryOpExp, MultiplyOp, AddOp, MinusOp, FunctionCallExp
+    DerefExp, BinaryOpExp, MultiplyOp, AddOp, MinusOp, FunctionCallExp, DivideOp, LessThanOp, EqualOp, NotEqualOp
 )
 
 class ParserError(Exception):
@@ -301,6 +301,38 @@ class Parser:
                 second = self.parse_exp()
                 self.consume(TokenType.RParen)
                 return BinaryOpExp(op= MinusOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.Division:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.Division)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= DivideOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.LessThan:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.LessThan)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= LessThanOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.EQ:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.EQ)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= EqualOp(), first_exp= first, second_exp= second)
+
+            elif next_token.type == TokenType.NEQ:
+                self.consume(TokenType.LParen)
+                self.consume(TokenType.NEQ)
+                first = self.parse_exp()
+                second = self.parse_exp()
+                self.consume(TokenType.RParen)
+                return BinaryOpExp(op= NotEqualOp(), first_exp= first, second_exp= second)
 
             elif next_token.type == TokenType.CALL:
                 self.consume(TokenType.LParen)
