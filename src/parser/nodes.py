@@ -98,7 +98,23 @@ class MinusOp:
 class MultiplyOp:
     pass
 
-Op = AddOp | MinusOp | MultiplyOp
+@dataclass
+class DivideOp:
+    pass
+
+@dataclass
+class LessThanOp:
+    pass
+
+@dataclass
+class EqualOp:
+    pass
+
+@dataclass
+class NotEqualOp:
+    pass
+
+Op = AddOp | MinusOp | MultiplyOp | DivideOp | LessThanOp | EqualOp | NotEqualOp
 
 
 
