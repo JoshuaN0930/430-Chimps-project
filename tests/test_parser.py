@@ -108,7 +108,7 @@ AssignStmt tests
 
 @pytest.mark.parametrize("source, expected", [("(assign x 5)", AssignStmt(lhs=VarAssign(var='x'), exp=IntLiteralExp(int_value=5))),
     ("(assign y False)", AssignStmt(lhs=VarAssign(var='y'), exp=LhsExp(lhs=VarAssign(var='False')))),
-    ("(assign foo + 2 2)", AssignStmt(lhs=VarAssign(var="foo"), exp=BinaryOpExp(op=AddOp(), first_exp=IntLiteralExp(int_value=2), second_exp=IntLiteralExp(int_value=2))))
+    ("(assign foo (+ 2 2))", AssignStmt(lhs=VarAssign(var="foo"), exp=BinaryOpExp(op=AddOp(), first_exp=IntLiteralExp(int_value=2), second_exp=IntLiteralExp(int_value=2))))
     
     ], ids=["assign int", "assign boolean", "assign Addop"])
 
