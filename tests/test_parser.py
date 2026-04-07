@@ -105,16 +105,22 @@ def test_vardec(source, expected):
 """
 AssignStmt tests
 """
-
 @pytest.mark.parametrize("source, expected", [("(assign x 5)", AssignStmt(lhs=VarAssign(var='x'), exp=IntLiteralExp(int_value=5))),
-    ("(assign y false)", AssignStmt(lhs=VarAssign(var='y'), exp=BooleanLiteralExp(boolean=False))),
-    ("(assign foo (+ 2 2))", AssignStmt(lhs=VarAssign(var="foo"), exp=BinaryOpExp(op=AddOp(), first_exp=IntLiteralExp(int_value=2), second_exp=IntLiteralExp(int_value=2))))
+    ("(assign y false)", AssignStmt(lhs=VarAssign(var="y"), exp=BooleanLiteralExp(boolean=False))),
+    ("(assign foo (+ 2 2))", AssignStmt(lhs=VarAssign(var="foo"), exp=BinaryOpExp(op=AddOp(), first_exp=IntLiteralExp(int_value=2), second_exp=IntLiteralExp(int_value=2)))),
+    ("(assign bar (- 9999 100))", AssignStmt(lhs=VarAssign(var="bar"), exp=BinaryOpExp(op=MinusOp(), first_exp=IntLiteralExp(int_value=9999), second_exp=IntLiteralExp(int_value=100)))),
+    ("(assign multi (* 7 7))", AssignStmt(lhs=VarAssign(var="multi"), exp=BinaryOpExp(op=MultiplyOp(), first_exp=IntLiteralExp(int_value=7), second_exp=IntLiteralExp(int_value=7)))),
+    ("(assign head null)", AssignStmt(lhs=VarAssign(var="head"), exp=NullExp())),
+    ("(assign less (< 10 20))", AssignStmt(lhs=VarAssign(var="less"), exp=BinaryOpExp(op=LessThanOp(), first_exp=IntLiteralExp(int_value=10), second_exp=IntLiteralExp(int_value=20))))
     
-    ], ids=["assign int", "assign boolean", "assign Addop"])
+    
+    ], ids=["assign int", "assign boolean", "assign Addop", "assign MinusOp", "assign MultiplyOp", "assign NullExp", "assign LessThanOp"])
 
 def test_assign(source, expected):
     result = parse(source)
     assert result.stmts == [expected]
+
+
 
 """
     tesst for stmt:: = `(` `while` exp stmt `)` | While loops
