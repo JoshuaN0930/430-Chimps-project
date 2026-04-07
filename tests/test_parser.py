@@ -107,7 +107,7 @@ AssignStmt tests
 """
 
 @pytest.mark.parametrize("source, expected", [("(assign x 5)", AssignStmt(lhs=VarAssign(var='x'), exp=IntLiteralExp(int_value=5))),
-    ("(assign y False)", AssignStmt(lhs=VarAssign(var='y'), exp=LhsExp(lhs=VarAssign(var='False')))),
+    ("(assign y false)", AssignStmt(lhs=VarAssign(var='y'), exp=BooleanLiteralExp(boolean=False))),
     ("(assign foo (+ 2 2))", AssignStmt(lhs=VarAssign(var="foo"), exp=BinaryOpExp(op=AddOp(), first_exp=IntLiteralExp(int_value=2), second_exp=IntLiteralExp(int_value=2))))
     
     ], ids=["assign int", "assign boolean", "assign Addop"])
@@ -115,3 +115,63 @@ AssignStmt tests
 def test_assign(source, expected):
     result = parse(source)
     assert result.stmts == [expected]
+
+"""
+    tesst for stmt:: = `(` `while` exp stmt `)` | While loops
+"""
+@pytest.mark.parametrize("source, expected", [
+    ("(while true (vardec int x))", WhileStmt(exp=BooleanLiteralExp(boolean=True), stmt=VarDecStmt(type=IntType(), name="x"))),
+    ("(while (< x 10) (assign x (+ x 1)))", WhileStmt(exp=BinaryOpExp(
+        op=LessThanOp(),
+        first_exp=LhsExp(lhs=VarAssign(var="x")),
+        second_exp=IntLiteralExp(int_value=10)
+    ),
+     stmt=AssignStmt(lhs=VarAssign(var="x"), exp=BinaryOpExp(
+         op=AddOp(),
+         first_exp=LhsExp(lhs=VarAssign(var="x")),
+         second_exp=IntLiteralExp(int_value=1)
+     )))),
+     ("(while (== x 1) (block (vardec int y) (assign y false)))", WhileStmt(
+         exp=BinaryOpExp(
+            op=EqualOp(),
+            first_exp=LhsExp(lhs=VarAssign(var="x")),
+            second_exp=IntLiteralExp(int_value=1)
+        ),
+        stmt=BlockStmt(stmt=[
+                VarDecStmt(type=IntType(), name="y"),
+                AssignStmt(lhs=VarAssign(var="y"), exp=BooleanLiteralExp(boolean=False))
+        ])
+     ))
+], ids=["bool condition", "comparison condition", "equals condition"])
+def test_while_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+
+
+"""
+    test for stmt::= `(` `if` exp stmt [stmt] `)` | if
+"""
+
+@pytest.mark.parametrize("source, expected", [
+    ("(if (!= x null) (vardec int y))", IfStmt(exp=BinaryOpExp(op=NotEqualOp(), first_exp=LhsExp(lhs=VarAssign(var="x")), second_exp=NullExp()), 
+                                               then_stmt=VarDecStmt(type=IntType(), name="y"), 
+                                               else_stmt=None)),
+    ("(if false (vardec int x) (vardec int y))", IfStmt(exp=BooleanLiteralExp(boolean=False), 
+                                                        then_stmt=VarDecStmt(type=IntType(), name="x"), 
+                                                        else_stmt=VarDecStmt(type=IntType(), name="y"))),
+], ids=["no else stmt", "with else stmt"])
+def test_if_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+
+"""
+    test for stmt:: = `(` `return` [exp] `)` | Return
+"""
+@pytest.mark.parametrize("source, expected", [
+    ("(return 5)", ReturnStmt(exp=IntLiteralExp(int_value=5))),
+    ("(return)", ReturnStmt(exp=None))
+], ids=["return int", "return empty"])
+def test_return_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+

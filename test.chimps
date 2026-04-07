@@ -5,3 +5,4 @@
 (assign x 5)
 (assign y 5)
 (println (call addNums x y))
+(assign y true)
