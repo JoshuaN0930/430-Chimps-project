@@ -315,3 +315,24 @@ def test_other_expressions(source, expected):
 ], ids=["call method w/ no exps", "call method with exps"])
 def test_call_expressions(source, expected):
     assert parse_exp_test(source) == expected
+
+
+######################### Operator Testing #########################
+
+def parse_op_test(source: str):
+    tokens = tokenize(source)
+    parser = Parser(tokens)
+    result = parser.parse_op()
+    return result
+
+@pytest.mark.parametrize("source, expected", [
+    ("+", AddOp()),
+    ("-", MinusOp()),
+    ("*", MultiplyOp()),
+    ("/", DivideOp()),
+    ("<", LessThanOp()),
+    ("==", EqualOp()),
+    ("!=", NotEqualOp()),
+], ids=["add", "minus", "multiply", "divide", "less_than", "equal", "not_equal"])
+def test_plus(source, expected):
+    assert parse_op_test(source) == expected

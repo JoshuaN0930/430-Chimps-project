@@ -182,6 +182,32 @@ class Parser:
         return result
 
     """
+    ################ Operator Parsing ####################
+        op ::= `+` | `-` | `*` | `/` | `<` | `==` | `!=`
+    """
+
+    def parse_op(self) -> Op:
+        token = self.peek()
+        op_dict = {
+            TokenType.Plus: AddOp,
+            TokenType.Minus: MinusOp,
+            TokenType.Star: MultiplyOp,
+            TokenType.Division: DivideOp,
+            TokenType.LessThan: LessThanOp,
+            TokenType.EQ: EqualOp,
+            TokenType.NEQ: NotEqualOp,
+        }
+        if token.type in op_dict:
+            self.consume(token.type)
+            return op_dict[token.type]()
+
+        raise ParserError(f"expected operator, got {token.type.name}", token.line)
+
+    """
+    ###################################################################
+    """
+
+    """
      ##################### Left Hand Side Parsing #####################
     """
 
@@ -225,6 +251,15 @@ class Parser:
     """
     ##################### Expression Parsing #####################
     """
+
+    # Used for binary expressions
+    def parse_binary_exp(self) -> BinaryOpExp:
+        self.consume(TokenType.LParen)
+        op = self.parse_op()
+        first = self.parse_exp()
+        second = self.parse_exp()
+        self.consume(TokenType.RParen)
+        return BinaryOpExp(op=op, first_exp=first, second_exp=second)
 
     def parse_exp(self) -> Exp:
         token = self.peek()
@@ -280,53 +315,15 @@ class Parser:
                 self.consume(TokenType.RParen)
                 return AddressOfExp(lhs=lhs)
 
-            elif next_token.type == TokenType.Plus:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.Plus)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= AddOp(), first_exp= first, second_exp= second)
-
-            elif next_token.type == TokenType.Minus:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.Minus)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= MinusOp(), first_exp= first, second_exp= second)
-
-            elif next_token.type == TokenType.Division:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.Division)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= DivideOp(), first_exp= first, second_exp= second)
-
-            elif next_token.type == TokenType.LessThan:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.LessThan)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= LessThanOp(), first_exp= first, second_exp= second)
-
-            elif next_token.type == TokenType.EQ:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.EQ)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= EqualOp(), first_exp= first, second_exp= second)
-
-            elif next_token.type == TokenType.NEQ:
-                self.consume(TokenType.LParen)
-                self.consume(TokenType.NEQ)
-                first = self.parse_exp()
-                second = self.parse_exp()
-                self.consume(TokenType.RParen)
-                return BinaryOpExp(op= NotEqualOp(), first_exp= first, second_exp= second)
+            elif next_token.type in {
+                TokenType.Plus,
+                TokenType.Minus,
+                TokenType.Division,
+                TokenType.LessThan,
+                TokenType.EQ,
+                TokenType.NEQ,
+            }:
+                return self.parse_binary_exp()
 
             elif next_token.type == TokenType.CALL:
                 self.consume(TokenType.LParen)
