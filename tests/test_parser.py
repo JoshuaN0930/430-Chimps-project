@@ -159,12 +159,18 @@ def test_while_stmt(source, expected):
 """
 
 @pytest.mark.parametrize("source, expected", [
-    ("(if (!= x null) (vardec int y))", IfStmt(exp=BinaryOpExp(op=NotEqualOp(), first_exp=LhsExp(lhs=VarAssign(var="x")), second_exp=NullExp()), 
-                                               then_stmt=VarDecStmt(type=IntType(), name="y"), 
-                                               else_stmt=None)),
-    ("(if false (vardec int x) (vardec int y))", IfStmt(exp=BooleanLiteralExp(boolean=False), 
-                                                        then_stmt=VarDecStmt(type=IntType(), name="x"), 
-                                                        else_stmt=VarDecStmt(type=IntType(), name="y"))),
+    ("(if (!= x null) (vardec int y))", IfStmt(exp=BinaryOpExp(
+        op=NotEqualOp(), 
+        first_exp=LhsExp(lhs=VarAssign(var="x")), 
+        second_exp=NullExp()), 
+        then_stmt=VarDecStmt(type=IntType(), name="y"), 
+        else_stmt=None
+    )),
+    ("(if false (vardec int x) (vardec int y))", IfStmt(
+        exp=BooleanLiteralExp(boolean=False), 
+        then_stmt=VarDecStmt(type=IntType(), name="x"), 
+        else_stmt=VarDecStmt(type=IntType(), name="y")
+    )),
 ], ids=["no else stmt", "with else stmt"])
 def test_if_stmt(source, expected):
     result = parse(source)
@@ -178,6 +184,57 @@ def test_if_stmt(source, expected):
     ("(return)", ReturnStmt(exp=None))
 ], ids=["return int", "return empty"])
 def test_return_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+
+"""
+    test for stmt::= (block stmt*)
+"""
+@pytest.mark.parametrize("source, expected", [
+    ("(block (vardec int x) (assign x 5))", BlockStmt(stmt=[
+        VarDecStmt(type=IntType(), name="x"),
+        AssignStmt(lhs=VarAssign(var="x"), 
+        exp=IntLiteralExp(int_value=5))
+        ])),
+    ("(block (println (* 4 5)))", BlockStmt(stmt=[
+        PrintlnStmt(exp=
+            BinaryOpExp(
+                op=MultiplyOp(),
+                first_exp=IntLiteralExp(int_value=4),
+                second_exp=IntLiteralExp(int_value=5)
+            ))
+        ]))
+], ids=["vardec block", "println block"])
+def test_block_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+
+
+"""
+    test for stmt::= (println exp)
+"""
+ 
+@pytest.mark.parametrize("source, expected", [
+    ("(println 5)", PrintlnStmt(exp=IntLiteralExp(int_value=5))),
+    ("(println (/ x 5))", PrintlnStmt(exp=BinaryOpExp(
+        op=DivideOp(),
+        first_exp=LhsExp(lhs=VarAssign(var="x")),
+        second_exp=IntLiteralExp(int_value=5)
+    )))
+], ids=["number print", "operation print"])
+def test_println_stmt(source, expected):
+    result = parse(source)
+    assert result.stmts == [expected]
+
+"""
+    test for stmt::= (stmt exp)
+"""
+@pytest.mark.parametrize("source, expected", [
+    ("(stmt 5)", ExpStmt(exp=IntLiteralExp(int_value=5))),
+    ("(stmt (&x))", ExpStmt(exp=AddressOfExp(lhs=VarAssign(var="x")))),
+    ("(stmt (call foo))", ExpStmt(exp=FunctionCallExp(func_name="foo", exp=[])))
+], ids=["int exp stmt", "address of exp stmt", "function call exp stmt"])
+def test_exp_stmt(source, expected):
     result = parse(source)
     assert result.stmts == [expected]
 
