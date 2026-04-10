@@ -238,3 +238,80 @@ def test_exp_stmt(source, expected):
     result = parse(source)
     assert result.stmts == [expected]
 
+
+######################### Expression Testing #########################
+
+
+def parse_exp_test(source: str):
+    tokens = tokenize(source)
+    parser = Parser(tokens)
+    result = parser.parse_exp()
+    return result
+
+@pytest.mark.parametrize("source, expected", [
+    ("3", IntLiteralExp(int_value=3)),
+    ("true", BooleanLiteralExp(boolean=True)),
+    ("false", BooleanLiteralExp(boolean=False)),
+    ("null", NullExp()),
+], ids=["int", "true", "false", "null"])
+def test_literal_expressions(source, expected):
+    assert parse_exp_test(source) == expected
+
+@pytest.mark.parametrize("source, expected", [
+    ("x", LhsExp(lhs= VarAssign(var= "x"))),
+    ("(. x next)", LhsExp(lhs=FieldStructAssign(lhs=VarAssign(var="x"), var="next"))),
+    ("(* x)", LhsExp(lhs=AssignToAddress(lhs=VarAssign(var="x")))),
+], ids=["var lhs", "field lhs", "lhs w/ star"])
+def test_lhs_expressions(source, expected):
+    assert parse_exp_test(source) == expected
+
+
+@pytest.mark.parametrize("source, expected", [
+    ("(& x)", AddressOfExp(lhs=VarAssign(var="x"))),
+    ("(* (& x))", DerefExp(exp=AddressOfExp(lhs=VarAssign(var="x")))),
+    ("(+ 1 1)", BinaryOpExp(
+        op=AddOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(- 1 1)", BinaryOpExp(
+        op=MinusOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(* 1 1)", BinaryOpExp(
+        op=MultiplyOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(/ 1 1)", BinaryOpExp(
+        op=DivideOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(< 1 1)", BinaryOpExp(
+        op=LessThanOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(== 1 1)", BinaryOpExp(
+        op=EqualOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+    ("(!= 1 1)", BinaryOpExp(
+        op=NotEqualOp(),
+        first_exp=IntLiteralExp(int_value=1),
+        second_exp=IntLiteralExp(int_value=1)
+    )),
+
+], ids=["address-of", "dereference", "plus", "minus", "multiplication", "division", "less_than", "equal", "not_equal"])
+def test_other_expressions(source, expected):
+    assert parse_exp_test(source) == expected
+
+@pytest.mark.parametrize("source, expected", [
+    ("(call length)", FunctionCallExp(func_name="length", exp=[])),
+    ("(call length (& first))", FunctionCallExp(func_name="length", exp=[AddressOfExp(lhs=VarAssign(var="first"))])),
+], ids=["call method w/ no exps", "call method with exps"])
+def test_call_expressions(source, expected):
+    assert parse_exp_test(source) == expected

@@ -1,13 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 from src.lexer.token import Token, TokenType
-from src.parser.nodes import (
-    IntType, VoidType, StructType, PointerType, Type,
-    Param, StructDef, FuncDef, Stmt,
-    Program, VarDecStmt, AssignStmt, Lhs, VarAssign, FieldStructAssign, AssignToAddress, BooleanLiteralExp, Exp,
-    IntLiteralExp, NullExp, LhsExp, WhileStmt, IfStmt, ReturnStmt, BlockStmt, PrintlnStmt, ExpStmt, AddressOfExp,
-    DerefExp, BinaryOpExp, MultiplyOp, AddOp, MinusOp, FunctionCallExp, DivideOp, LessThanOp, EqualOp, NotEqualOp
-)
+from src.parser.nodes import *
 
 class ParserError(Exception):
     def __init__(self, message: str, line: int):
