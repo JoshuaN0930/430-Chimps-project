@@ -53,12 +53,13 @@ class Typechecker:
             if funcs.name in self.func_dict:
                 raise Exception(f'Duplicate function found: {funcs.name}')
 
-            param_names = ()
+            param_names = set()
             param_types = []
             # Checks for any duplicate parameters
             for param in funcs.params:
                 if param.name in param_names:
                     raise Exception(f'Duplicate parameter with the same name found: {param.name}')
+                param_names.add(param.name)
                 param_types.append(self.check_type(param.type))
 
 
