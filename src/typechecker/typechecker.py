@@ -42,10 +42,9 @@ class Typechecker:
             for param in struct.params:
                 if param.name in param_dict:
                     raise Exception(f'Duplicate parameter with the same name found: {param.name}')
+                # Adds the struct with its name being the key and the parameter dictionary as its value
                 param_dict[param.name] = self.check_type(param.type)
 
-            # Adds the struct with its name being the key and the parameter dictionary as its value
-            self.struct_dict[struct.name] = param_dict
 
     # Places each function in the program into a dictionary
     def get_func(self):
