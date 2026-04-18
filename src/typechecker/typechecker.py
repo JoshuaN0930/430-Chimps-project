@@ -1,4 +1,3 @@
-
 from src.parser.nodes import *
 from src.parser.parser import *
 from src.lexer.tokenizer import tokenize
@@ -17,13 +16,11 @@ class Typechecker:
         self.get_struct()
         self.get_func()
 
+        for func in self.program.funcs:
+            self.typecheck_func(func)
 
-
-
-
-
-
-
+        # the variable is the key and their value is their type
+        env_variable = {}
 
 
 
@@ -71,6 +68,102 @@ class Typechecker:
             }
 
 
+    def typecheck_func(self, func):
+
+        var_env = {}
+        return_type = func.Rtype
+
+        for param in func.params:
+            var_env[param.name] = param.type
+
+
+        ######### Will change these to designated typecheck_stmt() ############
+        for stmt in func.body:
+            if isinstance(stmt, VarDecStmt):
+                if stmt.name in var_env:
+                    raise Exception(f"Variable with same name in use: {stmt.name}")
+                var_env[stmt.name] = self.check_type(stmt.type)
+
+            elif isinstance(stmt, AssignStmt):
+                left_type = self.typecheck_lhs(stmt, var_env)
+                right_type = self.typechecker_exp(stmt.exp, var_env)
+
+                if isinstance(stmt.exp, NullExp):
+                    if not isinstance(left_type, PointerType):
+                        raise Exception(f"Cannot assign null to non-pointer type {left_type}")
+                elif left_type != right_type:
+                    raise Exception(f"Cannot assign expression type {right_type} to lhs type {left_type}")
+
+            elif isinstance(stmt, ReturnStmt):
+                if stmt.exp is None:
+                    if not isinstance(return_type, VoidType):
+                        raise Exception(f"Incorrect return type: void, should be {return_type}")
+
+                else:
+                    return_stmt_type = self.typechecker_exp(stmt.exp, var_env)
+                    if return_stmt_type != return_type:
+                        raise  Exception(f"Incorrect return type: {return_stmt_type}, should be {return_type}")
+
+
+
+
+
+    def typecheck_lhs(self, left_hand, env_variable) -> Type:
+        if isinstance(left_hand, AssignStmt):
+            lhs = left_hand.lhs
+        else:
+            lhs = left_hand
+
+        # variable assignment: (assign x 5)
+        if isinstance(lhs, VarAssign):
+            # Make sure the variable exists in the current environment
+            if lhs.var not in env_variable:
+                raise Exception(f"Variable not found: {lhs.var}")
+            #returns type of the variable
+            return env_variable[lhs.var]
+
+        # Struct field assignment: (assign (. first value) 1)
+        if isinstance(lhs, FieldStructAssign):
+            # typecheck the base part before the field
+            base_type = self.typecheck_lhs(lhs.lhs, env_variable)
+            #base must be a struct type
+            if not isinstance(base_type, StructType):
+                raise Exception(f"Variable is not a valid StructType for field access: '{lhs.var}'")
+            # make sure the struct exists in the struct dictionary
+            if base_type.name not in self.struct_dict:
+                raise Exception(f"Unknown struct type: '{base_type.name}'")
+            # make sure the requested field exists in that struct
+            if lhs.var not in self.struct_dict[base_type.name]:
+                raise Exception(
+                    f"StructType field '{lhs.var}' is not found in '{base_type.name}'"
+                )
+            # return type of field
+            struct_var_type = self.struct_dict[base_type.name][lhs.var]
+            return struct_var_type
+
+        # assigning through an address:
+        if isinstance(lhs, AssignToAddress):
+            # typechecks the inner lhs
+            inner_type = self.typecheck_lhs(lhs.lhs, env_variable)
+            # the inner lhs must have a pointer type to dereference
+            if not isinstance(inner_type, PointerType):
+                raise Exception(f"Cannot assign through non-pointer type: {inner_type}")
+
+            return inner_type.inner
+
+        raise Exception(f"Invalid lhs: {lhs}")
+
+
+
+
+
+    def typechecker_exp(self, exp, env_variable) -> Type:
+        if isinstance(exp, IntLiteralExp):
+            return IntType()
+        raise Exception(f"Unhandled expression: {exp}")
+
+
+
     # Check if it is a valid type
     def check_type(self, type_value: Type) -> Type:
         if isinstance(type_value, IntType):
@@ -97,7 +190,11 @@ class Typechecker:
 
 # Testing use
     # typecheck("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")
-programs = Parser(tokenize("(struct Node(int value)((* Node) next))")).parse_program()
+# programs = Parser(tokenize("(struct Node(int value)((* Node) next))")).parse_program()
 # programs = Parser(tokenize("(vardec int sum)")).parse_program()
+# programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
+
+programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(vardec Node first)(assign (. first value) 1)(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
+
 tc = Typechecker(programs)
 tc.typecheck()
