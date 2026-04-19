@@ -178,14 +178,22 @@ class Typechecker:
             self.typechecker_exp(stmt.exp, var_env)
 
         elif isinstance(stmt, ReturnStmt):
+            # checks if the return statement has no expression
             if stmt.exp is None:
                 if not isinstance(return_type, VoidType):
                     raise Exception(f"Incorrect return type: void, should be {return_type}")
 
             else:
-                return_stmt_type = self.typechecker_exp(stmt.exp, var_env)
-                if return_stmt_type != return_type:
-                    raise Exception(f"Incorrect return type: {return_stmt_type}, should be {return_type}")
+                # returns null
+                if isinstance(stmt.exp, NullExp):
+                    # null can only be returned from a function with a pointer return type
+                    if not isinstance(return_type, PointerType):
+                        raise Exception(f"Cannot return null for non-pointer return type {return_type}")
+                else:
+                    return_stmt_type = self.typechecker_exp(stmt.exp, var_env)
+                    # checks that the expression type matches the function's return type
+                    if return_stmt_type != return_type:
+                        raise Exception(f"Incorrect return type: {return_stmt_type}, should be {return_type}")
 
         else:
             raise Exception(f"Invalid statement: {stmt}")
