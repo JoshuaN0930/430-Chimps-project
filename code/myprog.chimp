@@ -1,0 +1,18 @@
+(struct Node (int value) ((* Node) next))
+
+
+
+(func main () void
+  (vardec Node first)
+  (vardec Node second)
+  (assign (. first value) 1)
+  (assign (. first next) (& second))
+  (assign (. second value) 2)
+  (assign (. second next) null)
+
+  (vardec int n)
+  (vardec int x)
+  (assign n 42)
+  (assign x (* (& n)))
+  
+)

@@ -1,0 +1,8 @@
+(func main () void
+  (vardec int x)
+  (vardec int y)
+  (vardec int z)
+  (assign x 5)
+  (assign y 3)
+  (assign z (== x y))
+)

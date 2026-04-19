@@ -1,0 +1,5 @@
+(func add ((int a) (int b)) int (return (+ a b)))
+
+(func main () void
+  (vardec int x)
+  (assign x (call add 3 true)))
