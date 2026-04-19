@@ -18,8 +18,16 @@ class StructType:
 class PointerType:
     inner: Type 
 
+@dataclass
+class BoolType:
+    pass
+
+@dataclass
+class NullType:
+    pass
+
 #union of types 
-Type = IntType | VoidType | StructType | PointerType
+Type = IntType | VoidType | StructType | PointerType | BoolType | NullType
 
 #--Params--
 @dataclass

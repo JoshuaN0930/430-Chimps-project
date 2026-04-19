@@ -2,6 +2,7 @@ import sys
 from dataclasses import fields, is_dataclass
 from src.lexer.tokenizer import tokenize
 from src.parser.parser import Parser
+from src.typechecker.typechecker import Typechecker
 
 def format_ast(node, indent=0):
     pad = "  " * indent
@@ -25,25 +26,44 @@ def format_ast(node, indent=0):
         return "\n".join(lines)
     return f"{pad}{node!r}"
 
-# for reading from a file chimps code 
-if len(sys.argv) > 1:
-    with open(sys.argv[1], 'r') as f:
-        source = f.read()
-#for using terminal to input chimps code 
-else: 
-    source = input(">>>")
+def main():
+    # for reading from a file chimps code
+    if len(sys.argv) > 1:
+        filepath = sys.argv[1]
+        if not filepath.endswith(".chimp"):
+            print(f"Error: expected a .chimp file, got '{filepath}'")
+            sys.exit(1)
+        with open(filepath, 'r') as f:
+            source = f.read()
+    #for using terminal to input chimps code
+    else:
+        source = input(">>>")
 
 
-tokens = tokenize(source)
-print("--- tokens ---")
-print(tokens)
+    tokens = tokenize(source)
+    print("--- tokens ---")
+    print(tokens)
 
-parser = Parser(tokens)
-try:
-    result = parser.parse_program()
-    print("--- AST ---")
-    print(format_ast(result))
-except Exception as e:
-    print()
-    print(f"Parse Error: {e}")
-    exit(1)
+    parser = Parser(tokens)
+    try:
+        result = parser.parse_program()
+        print("--- AST ---")
+        print(format_ast(result))
+    except Exception as e:
+        print()
+        print(f"Parse Error: {e}")
+        sys.exit(1)
+
+    try:
+        tc = Typechecker(result)
+        tc.typecheck()
+        print("--- Typecheck ---")
+        print("OK")
+    except Exception as e:
+        print()
+        print(f"Typecheck Error: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

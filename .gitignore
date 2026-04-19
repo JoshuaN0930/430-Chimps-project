@@ -11,3 +11,8 @@ htmlcov/
 # Pytest
 .pytest_cache/__pycache__/
 *.pyc
+
+# Packaging
+*.egg-info/
+build/
+dist/

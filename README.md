@@ -193,15 +193,41 @@ comp430/
 
 ---
 
-## Building and Running
+## Setup
 
 **Requirements:** Python 3.10+
 
+After cloning or forking the repo:
+
+1. Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   ```
+2. Activate it:
+   - **Windows:** `.venv\Scripts\activate`
+   - **macOS/Linux:** `source .venv/bin/activate`
+3. Install the project in editable mode:
+   ```bash
+   pip install -e .
+   ```
+
+The editable install means code changes take effect immediately without reinstalling. It also registers the `Chimps` console script on your PATH.
+
+---
+
+## Building and Running
+
 ```bash
-python main.py <input.chimps>
+python main.py <input.chimp>
 ```
 
-This will run the full compiler pipeline and produce a `<input.asm` MIPS assembly file.
+Or, after `pip install -e .`:
+
+```bash
+Chimps <input.chimp>
+```
+
+This will run the full compiler pipeline lexer -> parser -> typechecker
 
 **Running tests:**
 ```bash

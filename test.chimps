@@ -1,8 +1,0 @@
-(func addNums ((int x) (int y)) int (return (+ x y)))
-
-(vardec int x)
-(vardec int y)
-(assign x 5)
-(assign y 5)
-(println (call addNums x y))
-(assign y true)
