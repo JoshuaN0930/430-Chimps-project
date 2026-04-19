@@ -22,6 +22,8 @@ class Typechecker:
         # the variable is the key and their value is their type
         env_variable = {}
         for stmt in self.program.stmts:
+            if isinstance(stmt, ReturnStmt):
+                raise Exception("Return statement not allowed")
             self.typecheck_stmt(stmt, env_variable, VoidType())
 
 
