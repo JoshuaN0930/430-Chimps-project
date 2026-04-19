@@ -21,6 +21,8 @@ class Typechecker:
 
         # the variable is the key and their value is their type
         env_variable = {}
+        for stmt in self.program.stmts:
+            self.typecheck_stmt(stmt, env_variable, VoidType())
 
 
 
@@ -71,38 +73,13 @@ class Typechecker:
     def typecheck_func(self, func):
 
         var_env = {}
-        return_type = func.Rtype
+        return_type = self.check_type(func.Rtype)
 
         for param in func.params:
-            var_env[param.name] = param.type
+            var_env[param.name] = self.check_type(param.type)
 
-
-        ######### Will change these to designated typecheck_stmt() ############
         for stmt in func.body:
-            if isinstance(stmt, VarDecStmt):
-                if stmt.name in var_env:
-                    raise Exception(f"Variable with same name in use: {stmt.name}")
-                var_env[stmt.name] = self.check_type(stmt.type)
-
-            elif isinstance(stmt, AssignStmt):
-                left_type = self.typecheck_lhs(stmt, var_env)
-                right_type = self.typechecker_exp(stmt.exp, var_env)
-
-                if isinstance(stmt.exp, NullExp):
-                    if not isinstance(left_type, PointerType):
-                        raise Exception(f"Cannot assign null to non-pointer type {left_type}")
-                elif left_type != right_type:
-                    raise Exception(f"Cannot assign expression type {right_type} to lhs type {left_type}")
-
-            elif isinstance(stmt, ReturnStmt):
-                if stmt.exp is None:
-                    if not isinstance(return_type, VoidType):
-                        raise Exception(f"Incorrect return type: void, should be {return_type}")
-
-                else:
-                    return_stmt_type = self.typechecker_exp(stmt.exp, var_env)
-                    if return_stmt_type != return_type:
-                        raise  Exception(f"Incorrect return type: {return_stmt_type}, should be {return_type}")
+            self.typecheck_stmt(stmt, var_env, return_type)
 
 
 
@@ -154,6 +131,64 @@ class Typechecker:
         raise Exception(f"Invalid lhs: {lhs}")
 
 
+    def typecheck_stmt(self, stmt, var_env, return_type):
+        if isinstance(stmt, VarDecStmt):
+            if stmt.name in var_env:
+                raise Exception(f"Variable with same name in use: {stmt.name}")
+            var_env[stmt.name] = self.check_type(stmt.type)
+
+        elif isinstance(stmt, AssignStmt):
+            left_type = self.typecheck_lhs(stmt, var_env)
+            right_type = self.typechecker_exp(stmt.exp, var_env)
+
+            if isinstance(stmt.exp, NullExp):
+                if not isinstance(left_type, PointerType):
+                    raise Exception(f"Cannot assign null to non-pointer type {left_type}")
+            elif left_type != right_type:
+                raise Exception(f"Cannot assign expression type {right_type} to lhs type {left_type}")
+
+        elif isinstance(stmt, WhileStmt):
+            while_env_var = var_env.copy()
+            cond_type = self.typechecker_exp(stmt.exp, var_env)
+            if not isinstance(cond_type, IntType):
+                raise Exception(f"While condition must be int, got {cond_type}")
+            self.typecheck_stmt(stmt.stmt, while_env_var, return_type)
+
+        elif isinstance(stmt, IfStmt):
+            cond_type = self.typechecker_exp(stmt.exp, var_env)
+            if not isinstance(cond_type, IntType):
+                raise Exception(f"If condition must be int, got {cond_type}")
+            self.typecheck_stmt(stmt.then_stmt, var_env.copy(), return_type)
+            if stmt.else_stmt is not None:
+                self.typecheck_stmt(stmt.else_stmt, var_env.copy(), return_type)
+
+
+        elif isinstance(stmt, BlockStmt):
+            list_of_stmt = stmt.stmt
+            block_env = var_env.copy()
+            for stmts in list_of_stmt:
+                self.typecheck_stmt(stmts, block_env, return_type)
+
+        elif isinstance(stmt, PrintlnStmt):
+            self.typechecker_exp(stmt.exp, var_env)
+
+        elif isinstance(stmt, ExpStmt):
+            self.typechecker_exp(stmt.exp, var_env)
+
+        elif isinstance(stmt, ReturnStmt):
+            if stmt.exp is None:
+                if not isinstance(return_type, VoidType):
+                    raise Exception(f"Incorrect return type: void, should be {return_type}")
+
+            else:
+                return_stmt_type = self.typechecker_exp(stmt.exp, var_env)
+                if return_stmt_type != return_type:
+                    raise Exception(f"Incorrect return type: {return_stmt_type}, should be {return_type}")
+
+        else:
+            raise Exception(f"Invalid statement: {stmt}")
+
+
 
 
 
@@ -192,9 +227,10 @@ class Typechecker:
     # typecheck("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")
 # programs = Parser(tokenize("(struct Node(int value)((* Node) next))")).parse_program()
 # programs = Parser(tokenize("(vardec int sum)")).parse_program()
-# programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
+programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
 
-programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(vardec Node first)(assign (. first value) 1)(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
 
+# programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(vardec Node first)(assign (. first value) 1)(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
+#
 tc = Typechecker(programs)
 tc.typecheck()
