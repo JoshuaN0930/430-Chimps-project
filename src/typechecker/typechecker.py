@@ -152,13 +152,13 @@ class Typechecker:
         elif isinstance(stmt, WhileStmt):
             while_env_var = var_env.copy()
             cond_type = self.typechecker_exp(stmt.exp, var_env)
-            if not isinstance(cond_type, IntType):
+            if not isinstance(cond_type, BoolType):
                 raise Exception(f"While condition must be int, got {cond_type}")
             self.typecheck_stmt(stmt.stmt, while_env_var, return_type)
 
         elif isinstance(stmt, IfStmt):
             cond_type = self.typechecker_exp(stmt.exp, var_env)
-            if not isinstance(cond_type, IntType):
+            if not isinstance(cond_type, BoolType):
                 raise Exception(f"If condition must be int, got {cond_type}")
             self.typecheck_stmt(stmt.then_stmt, var_env.copy(), return_type)
             if stmt.else_stmt is not None:
@@ -207,79 +207,79 @@ class Typechecker:
         #exp = 5
         if isinstance(exp, IntLiteralExp):
             return IntType()
-        
+
         #exp = true/false
         elif isinstance(exp, BooleanLiteralExp):
             return BoolType()
-        
-        #exp = null 
+
+        #exp = null
         elif isinstance(exp, NullExp):
             return NullType()
-        
+
         #exp = lhs
         elif isinstance(exp, LhsExp):
             return self.typecheck_lhs(exp.lhs, env_variable)
-        
-        #exp = & lhs 
+
+        #exp = & lhs
         elif isinstance(exp, AddressOfExp):
             return PointerType(inner=self.typecheck_lhs(exp.lhs, env_variable))
-        
+
         #exp = * exp
         elif isinstance(exp, DerefExp):
             t = self.typechecker_exp(exp.exp, env_variable)
             if not isinstance(t, PointerType):
                 raise Exception(f"Cannot dereference non-pointer type: {t}")
-            
+
             return t.inner
-        
+
         #exp = (op exp exp)
         elif isinstance(exp, BinaryOpExp):
             left_type  = self.typechecker_exp(exp.first_exp, env_variable)
             right_type = self.typechecker_exp(exp.second_exp, env_variable)
             op = exp.op
-            
+
             # Binop
             if isinstance(op, (AddOp, MinusOp, MultiplyOp, DivideOp)):
                 if not isinstance(left_type, IntType) or  not isinstance(right_type, IntType):
                     raise Exception(f"Arithmetic operators require int operands, got ({left_type}) , ({right_type})")
                 return IntType()
-            
+
             # < comparasion
             if isinstance(op, LessThanOp):
                 if not isinstance(left_type, IntType) or not isinstance(right_type, IntType):
                     raise Exception(f"require int on left and right, got ({left_type}) ({right_type})")
                 return BoolType()
-            
-            #== != 
+
+            #== !=
             if isinstance(op, (EqualOp, NotEqualOp)):
                if not self.types_compatible(left_type, right_type):
                    raise Exception(f"Cannot compare {left_type} with {right_type}")
                return BoolType()
-            
+
             raise Exception(f"Unknown operator: {op}")
-        
+
         #exp = call funcname exp*
         elif isinstance(exp, FunctionCallExp):
             #func must already exist
             if exp.func_name not in self.func_dict:
                 raise Exception(f"Uknown Function: {exp.func_name}")
-            
+
             func_info = self.func_dict[exp.func_name]
             expected_params = func_info["param_types"]
             return_type = func_info["return"]
 
-            # check arity 
+            # check arity
             if len(exp.exp) != len(expected_params):
                 raise Exception(f"Function {exp.func_name} expects arity {len(expected_params)}, got arity {len(exp.exp)}")
-            
-            #check var being passed in matches expected type 
+
+            #check var being passed in matches expected type
             for i, (arg, expected_type) in enumerate(zip(exp.exp, expected_params)):
                 arg_type = self.typechecker_exp(arg, env_variable)
                 if not self.types_compatible(expected_type, arg_type):
                     raise Exception(f"Arg {i} of {exp.func_name}: expected {expected_type}, got {arg_type}")
-            
+
             return return_type
-        
+
         raise Exception(f"Unhandled expression: {exp}")
 
 
@@ -298,8 +298,8 @@ class Typechecker:
             self.check_type(type_value.inner)
             return type_value
         raise Exception(f"Invalid type: {type_value}")
-    
-    
+
+
     def types_compatible(self, t1: Type, t2: Type) -> bool:
         if isinstance(t1, NullType) and isinstance(t2, PointerType):
             return True
@@ -320,6 +320,7 @@ class Typechecker:
     # typecheck("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")
 # programs = Parser(tokenize("(struct Node(int value)((* Node) next))")).parse_program()
 # programs = Parser(tokenize("(vardec int sum)")).parse_program()
+programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
 #programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(while (!= list null)(block(assign retval (+ retval 1))(assign list (. (* list) next))))(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
 
 # programs = Parser(tokenize("(struct Node(int value)((* Node) next))(func length (((* Node) list)) int(vardec int retval)(assign retval 0)(vardec Node first)(assign (. first value) 1)(return retval))(vardec Node first)(vardec Node second)(vardec Node third)(assign (. first value) 1)(assign (. first next) (& second))(assign (. second value) 2)(assign (. second next) (& third))(assign (. third value) 3)(assign (. third next) null)(println (call length (& first)))")).parse_program()
