@@ -3,8 +3,8 @@ from src.typechecker.typechecker import Typechecker
 from src.parser.nodes import *
 
 
-def typechecker_tester(struct_dict=None, func_dict=None):
-    typechecker = Typechecker(Program([], [], []))
+def typechecker_tester(program=None, struct_dict=None, func_dict=None):
+    typechecker = Typechecker(program or Program([], [], []))
     typechecker.struct_dict = struct_dict or {}
     typechecker.func_dict = func_dict or {}
     return typechecker
@@ -135,3 +135,47 @@ def test_typechecker_stmt(stmt, env, return_type, expected_env):
     typechecker = typechecker_tester()
     typechecker.typecheck_stmt(stmt, env, return_type)
     assert env == expected_env
+
+
+
+@pytest.mark.parametrize(
+    "struct_def, struct_dict, expected_struct_dict",
+    [
+        (
+            StructDef(
+                name="Node",
+                params=[
+                    Param(type=IntType(), name="value"),
+                    Param(type=PointerType(StructType("Node")), name="next"),
+                ]
+            ),
+            {"Node": {}},
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node"))
+                }
+            }
+        ),
+        (
+            StructDef(
+                name="Pair",
+                params=[
+                    Param(type=IntType(), name="x"),
+                    Param(type=IntType(), name="y"),
+                ]
+            ),
+            {"Pair": {}},
+            {
+                "Pair": {
+                    "x": IntType(),
+                    "y": IntType()
+                }
+            }
+        ),
+    ]
+)
+def test_typecheck_struct(struct_def, struct_dict, expected_struct_dict):
+    typechecker = typechecker_tester(struct_dict=struct_dict)
+    typechecker.typecheck_struct(struct_def)
+    assert typechecker.struct_dict == expected_struct_dict

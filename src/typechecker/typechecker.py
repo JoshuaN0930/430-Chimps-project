@@ -27,6 +27,16 @@ class Typechecker:
             self.typecheck_stmt(stmt, env_variable, VoidType())
 
 
+    def typecheck_struct(self, struct):
+        field_dict = self.struct_dict[struct.name]
+
+        for field in struct.params:
+            if field.name in field_dict:
+                raise Exception(f'Duplicate field found: {field.name} in struct {struct.name}')
+            
+            field_type = self.check_type(field.type)
+            field_dict[field.name] = field_type
+
 
 
     # Places each struct in the program into a dictionary
@@ -306,9 +316,6 @@ class Typechecker:
         if isinstance(t2, NullType) and isinstance(t1, PointerType):
             return True
         return t1 == t2
-
-
-
 
 
 
