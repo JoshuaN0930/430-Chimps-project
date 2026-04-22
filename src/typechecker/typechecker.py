@@ -34,27 +34,22 @@ class Typechecker:
             if field.name in field_dict:
                 raise Exception(f'Duplicate field found: {field.name} in struct {struct.name}')
             
-            field_type = self.check_type(field.type)
+            field_type = self.check_nonvoid_type(field.type, f"field {field.name} of struct {struct.name}")
             field_dict[field.name] = field_type
-
-
 
     # Places each struct in the program into a dictionary
     def get_struct(self):
         for struct in self.program.structs:
             # Checks if a struct with the same name is already in the dictionary
             if struct.name in self.struct_dict:
-                raise Exception(f'Duplicate struct found: {struct.name}')
+                raise Exception(f"Duplicate struct found: {struct.name}")
+
+            # Adds the struct name as a key with an empty dictionary for its fields
             self.struct_dict[struct.name] = {}
 
         for struct in self.program.structs:
-            param_dict = self.struct_dict[struct.name]
-            # Checks for any duplicate parameters
-            for param in struct.params:
-                if param.name in param_dict:
-                    raise Exception(f'Duplicate parameter with the same name found: {param.name}')
-                # Adds the struct with its name being the key and the parameter dictionary as its value
-                param_dict[param.name] = self.check_type(param.type)
+            # Typechecks the fields of each struct and fills in its field dictionary
+            self.typecheck_struct(struct)
 
 
     # Places each function in the program into a dictionary
@@ -71,7 +66,9 @@ class Typechecker:
                 if param.name in param_names:
                     raise Exception(f'Duplicate parameter with the same name found: {param.name}')
                 param_names.add(param.name)
-                param_types.append(self.check_type(param.type))
+                param_types.append(
+                    self.check_nonvoid_type(param.type, f"parameter {param.name} of function {funcs.name}")
+                )
 
 
             rtype = self.check_type(funcs.Rtype)
@@ -88,10 +85,16 @@ class Typechecker:
         return_type = self.check_type(func.Rtype)
 
         for param in func.params:
-            var_env[param.name] = self.check_type(param.type)
+            if param.name in var_env:
+                raise Exception(f"Duplicate parameter name: {param.name}")
+            var_env[param.name] = self.check_nonvoid_type(param.type, "function parameter")
 
         for stmt in func.body:
             self.typecheck_stmt(stmt, var_env, return_type)
+
+        if not isinstance(return_type, VoidType):
+            if not self.good_return_body(func.body):
+                raise Exception(f"Function {func.name} may not return a value")
 
 
 
@@ -147,7 +150,7 @@ class Typechecker:
         if isinstance(stmt, VarDecStmt):
             if stmt.name in var_env:
                 raise Exception(f"Variable with same name in use: {stmt.name}")
-            var_env[stmt.name] = self.check_type(stmt.type)
+            var_env[stmt.name] = self.check_nonvoid_type(stmt.type, f"variable {stmt.name}")
 
         elif isinstance(stmt, AssignStmt):
             left_type = self.typecheck_lhs(stmt, var_env)
@@ -163,13 +166,13 @@ class Typechecker:
             while_env_var = var_env.copy()
             cond_type = self.typechecker_exp(stmt.exp, var_env)
             if not isinstance(cond_type, BoolType):
-                raise Exception(f"While condition must be int, got {cond_type}")
+                raise Exception(f"While condition must be bool, got {cond_type}")
             self.typecheck_stmt(stmt.stmt, while_env_var, return_type)
 
         elif isinstance(stmt, IfStmt):
             cond_type = self.typechecker_exp(stmt.exp, var_env)
             if not isinstance(cond_type, BoolType):
-                raise Exception(f"If condition must be int, got {cond_type}")
+                raise Exception(f"If condition must be bool, got {cond_type}")
             self.typecheck_stmt(stmt.then_stmt, var_env.copy(), return_type)
             if stmt.else_stmt is not None:
                 self.typecheck_stmt(stmt.else_stmt, var_env.copy(), return_type)
@@ -182,7 +185,9 @@ class Typechecker:
                 self.typecheck_stmt(stmts, block_env, return_type)
 
         elif isinstance(stmt, PrintlnStmt):
-            self.typechecker_exp(stmt.exp, var_env)
+            exp_type = self.typechecker_exp(stmt.exp, var_env)
+            if not isinstance(exp_type, (IntType, BoolType, PointerType)):
+                raise Exception(f"println only supports int, bool, and pointers, got {exp_type}")
 
         elif isinstance(stmt, ExpStmt):
             self.typechecker_exp(stmt.exp, var_env)
@@ -309,6 +314,19 @@ class Typechecker:
             return type_value
         raise Exception(f"Invalid type: {type_value}")
 
+    # Checks that a type is valid and not void
+    def check_nonvoid_type(self, type_value: Type, where: str) -> Type:
+        # First makes sure the type itself is a valid type
+        checked = self.check_type(type_value)
+        # Raises an error if the type is void
+        if isinstance(checked, VoidType):
+            raise Exception(f"void is not allowed for {where}")
+        return checked
+
+    # Checks that a return type is valid
+    def check_return_type(self, type_value: Type) -> Type:
+        return self.check_type(type_value)
+
 
     def types_compatible(self, t1: Type, t2: Type) -> bool:
         if isinstance(t1, NullType) and isinstance(t2, PointerType):
@@ -317,8 +335,43 @@ class Typechecker:
             return True
         return t1 == t2
 
+    # Checks if a statement always returns
+    def good_return_stmt(self, stmt) -> bool:
+        # return statement always returns
+        if isinstance(stmt, ReturnStmt):
+            return True
 
+        # block returns if any statement inside guarantees a return
+        if isinstance(stmt, BlockStmt):
+            for state in stmt.stmt:
+                if self.good_return_stmt(state):
+                    return True
+            return False
 
+        # if statement only guarantees a return if both branches return
+        if isinstance(stmt, IfStmt):
+            if stmt.else_stmt is None:
+                return False
+            return (
+                    self.good_return_stmt(stmt.then_stmt)
+                    and self.good_return_stmt(stmt.else_stmt)
+            )
+
+        # while loop does not guarantee a return because it may not run
+        if isinstance(stmt, WhileStmt):
+            return False
+
+        # Any other kind of statement does not guarantee a return
+        return False
+
+    # Checks if a function body has a guaranteed return
+    def good_return_body(self, stmts) -> bool:
+        for stmt in stmts:
+            # If one statement guarantees a return, then the body is good
+            if self.good_return_stmt(stmt):
+                return True
+        # If no statement guarantees a return, then the body is not good
+        return False
 
 
 

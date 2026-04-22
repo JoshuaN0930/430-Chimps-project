@@ -301,3 +301,147 @@ def test_check_type(types, struct_dict, expected):
     typechecker = typechecker_tester(struct_dict=struct_dict)
     result = typechecker.check_type(types)
     assert result == expected
+
+@pytest.mark.parametrize(
+    "type_value, where, struct_dict, expected",
+    [
+        (IntType(), "variable x", {}, IntType()),
+        (
+            StructType("Node"),
+            "field next",
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node")),
+                }
+            },
+            StructType("Node"),
+        ),
+        (
+            PointerType(IntType()),
+            "parameter p",
+            {},
+            PointerType(IntType()),
+        ),
+    ]
+)
+def test_check_nonvoid_type(type_value, where, struct_dict, expected):
+    typechecker = typechecker_tester(struct_dict=struct_dict)
+    result = typechecker.check_nonvoid_type(type_value, where)
+    assert result == expected
+
+@pytest.mark.parametrize(
+    "type_value, struct_dict, expected",
+    [
+        (IntType(), {}, IntType()),
+        (VoidType(), {}, VoidType()),
+        (
+            StructType("Node"),
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node")),
+                }
+            },
+            StructType("Node"),
+        ),
+        (
+            PointerType(IntType()),
+            {},
+            PointerType(IntType()),
+        ),
+    ]
+)
+def test_check_return_type(type_value, struct_dict, expected):
+    typechecker = typechecker_tester(struct_dict=struct_dict)
+    result = typechecker.check_return_type(type_value)
+    assert result == expected
+
+@pytest.mark.parametrize(
+    "stmt, expected",
+    [
+        (ReturnStmt(exp=IntLiteralExp(1)), True),
+        (
+            BlockStmt(stmt=[
+                VarDecStmt(type=IntType(), name="x"),
+                ReturnStmt(exp=IntLiteralExp(1)),
+            ]),
+            True,
+        ),
+        (
+            IfStmt(
+                exp=BooleanLiteralExp(True),
+                then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
+                else_stmt=ReturnStmt(exp=IntLiteralExp(2)),
+            ),
+            True,
+        ),
+        (
+            IfStmt(
+                exp=BooleanLiteralExp(True),
+                then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
+                else_stmt=None,
+            ),
+            False,
+        ),
+        (
+            WhileStmt(
+                exp=BooleanLiteralExp(True),
+                stmt=ReturnStmt(exp=IntLiteralExp(1)),
+            ),
+            False,
+        ),
+        (
+            VarDecStmt(type=IntType(), name="x"),
+            False,
+        ),
+    ]
+)
+def test_good_return_stmt(stmt, expected):
+    typechecker = typechecker_tester()
+    result = typechecker.good_return_stmt(stmt)
+    assert result == expected
+
+@pytest.mark.parametrize(
+    "stmts, expected",
+    [
+        (
+            [
+                VarDecStmt(type=IntType(), name="x"),
+                ReturnStmt(exp=IntLiteralExp(1)),
+            ],
+            True,
+        ),
+        (
+            [
+                VarDecStmt(type=IntType(), name="x"),
+                AssignStmt(lhs=VarAssign("x"), exp=IntLiteralExp(1)),
+            ],
+            False,
+        ),
+        (
+            [
+                IfStmt(
+                    exp=BooleanLiteralExp(True),
+                    then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
+                    else_stmt=ReturnStmt(exp=IntLiteralExp(2)),
+                )
+            ],
+            True,
+        ),
+        (
+            [
+                IfStmt(
+                    exp=BooleanLiteralExp(True),
+                    then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
+                    else_stmt=None,
+                )
+            ],
+            False,
+        ),
+    ]
+)
+def test_good_return_body(stmts, expected):
+    typechecker = typechecker_tester()
+    result = typechecker.good_return_body(stmts)
+    assert result == expected
