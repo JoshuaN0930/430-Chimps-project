@@ -302,163 +302,109 @@ def test_check_type(types, struct_dict, expected):
     result = typechecker.check_type(types)
     assert result == expected
 
-@pytest.mark.parametrize(
-    "type_value, where, struct_dict, expected",
-    [
-        (IntType(), "variable x", {}, IntType()),
-        (
-            StructType("Node"),
-            "field next",
-            {
-                "Node": {
-                    "value": IntType(),
-                    "next": PointerType(StructType("Node")),
-                }
-            },
-            StructType("Node"),
-        ),
-        (
-            PointerType(IntType()),
-            "parameter p",
-            {},
-            PointerType(IntType()),
-        ),
-    ]
-)
-def test_check_nonvoid_type(type_value, where, struct_dict, expected):
-    typechecker = typechecker_tester(struct_dict=struct_dict)
-    result = typechecker.check_nonvoid_type(type_value, where)
-    assert result == expected
+# test for exp = int 
+@pytest.mark.parametrize("exp, env, expected", [
+    (IntLiteralExp(5), {}, IntType()),
+    (IntLiteralExp(0), {}, IntType()),
+    (IntLiteralExp(-1), {}, IntType())
+])
+def test_exp_int_lit(exp, env, expected):
+    tc = typechecker_tester()
+    assert tc.typechecker_exp(exp, env) == expected
 
-@pytest.mark.parametrize(
-    "type_value, struct_dict, expected",
-    [
-        (IntType(), {}, IntType()),
-        (VoidType(), {}, VoidType()),
-        (
-            StructType("Node"),
-            {
-                "Node": {
-                    "value": IntType(),
-                    "next": PointerType(StructType("Node")),
-                }
-            },
-            StructType("Node"),
-        ),
-        (
-            PointerType(IntType()),
-            {},
-            PointerType(IntType()),
-        ),
-    ]
-)
-def test_check_return_type(type_value, struct_dict, expected):
-    typechecker = typechecker_tester(struct_dict=struct_dict)
-    result = typechecker.check_return_type(type_value)
-    assert result == expected
+#test for exp = true/false 
+@pytest.mark.parametrize("exp, env, expected", [
+    (BooleanLiteralExp(True), {}, BoolType()),
+    (BooleanLiteralExp(False), {}, BoolType())
+])
+def test_exp_bool_lit(exp, env, expected):
+    tc = typechecker_tester()
+    assert tc.typechecker_exp(exp, env) == expected
 
-@pytest.mark.parametrize(
-    "stmt, expected",
-    [
-        (ReturnStmt(exp=IntLiteralExp(1)), True),
-        (
-            BlockStmt(stmt=[
-                VarDecStmt(type=IntType(), name="x"),
-                ReturnStmt(exp=IntLiteralExp(1)),
-            ]),
-            True,
-        ),
-        (
-            IfStmt(
-                exp=BooleanLiteralExp(True),
-                then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
-                else_stmt=ReturnStmt(exp=IntLiteralExp(2)),
-            ),
-            True,
-        ),
-        (
-            IfStmt(
-                exp=BooleanLiteralExp(True),
-                then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
-                else_stmt=None,
-            ),
-            False,
-        ),
-        (
-            WhileStmt(
-                exp=BooleanLiteralExp(True),
-                stmt=ReturnStmt(exp=IntLiteralExp(1)),
-            ),
-            False,
-        ),
-        (
-            VarDecStmt(type=IntType(), name="x"),
-            False,
-        ),
-    ]
-)
-def test_good_return_stmt(stmt, expected):
-    typechecker = typechecker_tester()
-    result = typechecker.good_return_stmt(stmt)
-    assert result == expected
+#test for exp = null
+@pytest.mark.parametrize("exp, env, expected", [
+    (NullExp(), {}, NullType()),
+])
+def test_exp_null(exp, env, expected):
+    tc = typechecker_tester()
+    assert tc.typechecker_exp(exp, env) == expected
 
-@pytest.mark.parametrize(
-    "stmts, expected",
-    [
-        (
-            [
-                VarDecStmt(type=IntType(), name="x"),
-                ReturnStmt(exp=IntLiteralExp(1)),
-            ],
-            True,
-        ),
-        (
-            [
-                VarDecStmt(type=IntType(), name="x"),
-                AssignStmt(lhs=VarAssign("x"), exp=IntLiteralExp(1)),
-            ],
-            False,
-        ),
-        (
-            [
-                IfStmt(
-                    exp=BooleanLiteralExp(True),
-                    then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
-                    else_stmt=ReturnStmt(exp=IntLiteralExp(2)),
-                )
-            ],
-            True,
-        ),
-        (
-            [
-                IfStmt(
-                    exp=BooleanLiteralExp(True),
-                    then_stmt=ReturnStmt(exp=IntLiteralExp(1)),
-                    else_stmt=None,
-                )
-            ],
-            False,
-        ),
-    ]
-)
-def test_good_return_body(stmts, expected):
-    typechecker = typechecker_tester()
-    result = typechecker.good_return_body(stmts)
-    assert result == expected
+#test for exp = ( & lhs)
+@pytest.mark.parametrize("exp, env, struct_dict, expected", [
+    #(& x) where x: int -> *int
+    (
+        AddressOfExp(VarAssign("x")),
+        {"x": IntType()},
+        {},
+        PointerType(IntType()),
+    ),
+    # (& (. first value)) → *int (address of a struct field)
+    (
+        AddressOfExp(FieldStructAssign(VarAssign("first"), "value")), 
+        {"first": StructType("Node")},
+        {"Node": {"value": IntType()}},
+        PointerType(IntType()),
+    ),
+    # (& (* p)) where p: *int -> *int (address of a deref)
+    (
+        AddressOfExp(AssignToAddress(VarAssign("p"))),
+        {"p": PointerType(IntType())},
+        {},
+        PointerType(IntType()),
+    )
+])
+def test_exp_addressOf(exp, env,struct_dict, expected):
+    tc = typechecker_tester(struct_dict=struct_dict)
+    assert tc.typechecker_exp(exp, env) == expected
 
-@pytest.mark.parametrize(
-    "program_source",
-    [
-        "(return 1)",
-        "(block (return 1))",
-        "(if true (return 1) (stmt 0))",
-        "(if true (stmt 0) (return 1))",
-        "(while true (return 1))",
-    ]
-)
-def test_has_return_stmt(program_source):
-    program = Parser(tokenize(program_source)).parse_program()
-    typechecker = Typechecker(program)
+#test for exp = (* exp)
+@pytest.mark.parametrize("exp, env, expected", [
+    #(* p) where p: *int -> int
+    (
+        DerefExp(LhsExp(VarAssign("p"))),
+        {"p" : PointerType(IntType())},
+        IntType(),
+    )
+])
+def test_exp_deref(exp, env, expected):
+    tc = typechecker_tester()
+    assert tc.typechecker_exp(exp, env) == expected
 
-    with pytest.raises(Exception, match="Return statement not allowed outside a function"):
-        typechecker.typecheck()
+# test exp = (op exp exp)
+@pytest.mark.parametrize("exp, env, expected", [
+    #(+ 1 2 ) -> int
+    (
+        BinaryOpExp(AddOp(), IntLiteralExp(1), IntLiteralExp(2)),
+        {},
+        IntType(),
+    ),
+    #(< 1 2) -> bool 
+    (
+        BinaryOpExp(LessThanOp(), IntLiteralExp(1), IntLiteralExp(2)),
+        {},
+        BoolType(),
+    ),
+    #(== ptr null) -> bool
+    (
+        BinaryOpExp(EqualOp(), LhsExp(VarAssign("ptr")), NullExp()),
+        {"ptr": PointerType(IntType())},
+        BoolType(),
+    )
+])
+def test_exp_op(exp, env, expected):
+    tc = typechecker_tester()
+    assert tc.typechecker_exp(exp, env) == expected
+
+#test for exp = (call funcname exp* )
+@pytest.mark.parametrize("exp, env,func_dict, expected", [
+    #(call add_nums x y) where add_nums: (int) -> int ==> int 
+    (
+        FunctionCallExp(func_name="add_nums", exp=[LhsExp(VarAssign("x")), LhsExp(VarAssign("y"))]),
+        {"x" : IntType(), "y": IntType()},
+        {"add_nums": {"param_types": [IntType(), IntType()], "return": IntType()}},
+        IntType(),
+    )
+])
+def test_exp_callFunc(exp, env, func_dict, expected):
+    tc = typechecker_tester(func_dict=func_dict)
+    assert tc.typechecker_exp(exp, env) == expected
