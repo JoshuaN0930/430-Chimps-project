@@ -445,3 +445,20 @@ def test_good_return_body(stmts, expected):
     typechecker = typechecker_tester()
     result = typechecker.good_return_body(stmts)
     assert result == expected
+
+@pytest.mark.parametrize(
+    "program_source",
+    [
+        "(return 1)",
+        "(block (return 1))",
+        "(if true (return 1) (stmt 0))",
+        "(if true (stmt 0) (return 1))",
+        "(while true (return 1))",
+    ]
+)
+def test_has_return_stmt(program_source):
+    program = Parser(tokenize(program_source)).parse_program()
+    typechecker = Typechecker(program)
+
+    with pytest.raises(Exception, match="Return statement not allowed outside a function"):
+        typechecker.typecheck()

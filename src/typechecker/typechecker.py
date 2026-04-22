@@ -22,8 +22,8 @@ class Typechecker:
         # the variable is the key and their value is their type
         env_variable = {}
         for stmt in self.program.stmts:
-            if isinstance(stmt, ReturnStmt):
-                raise Exception("Return statement not allowed")
+            if self.has_return_stmt(stmt):
+                raise Exception("Return statement not allowed outside a function")
             self.typecheck_stmt(stmt, env_variable, VoidType())
 
 
@@ -184,10 +184,11 @@ class Typechecker:
             for stmts in list_of_stmt:
                 self.typecheck_stmt(stmts, block_env, return_type)
 
+
         elif isinstance(stmt, PrintlnStmt):
             exp_type = self.typechecker_exp(stmt.exp, var_env)
-            if not isinstance(exp_type, (IntType, BoolType, PointerType)):
-                raise Exception(f"println only supports int, bool, and pointers, got {exp_type}")
+            if isinstance(exp_type, VoidType):
+                raise Exception("println cannot print void")
 
         elif isinstance(stmt, ExpStmt):
             self.typechecker_exp(stmt.exp, var_env)
@@ -371,6 +372,34 @@ class Typechecker:
             if self.good_return_stmt(stmt):
                 return True
         # If no statement guarantees a return, then the body is not good
+        return False
+
+    # Checks if a statement contains a return anywhere inside it
+    def has_return_stmt(self, stmt) -> bool:
+        # Direct return statement
+        if isinstance(stmt, ReturnStmt):
+            return True
+
+        # Check each statement inside a block
+        elif isinstance(stmt, BlockStmt):
+            for state in stmt.stmt:
+                if self.has_return_stmt(state):
+                    return True
+
+        # Check both branches of an if statement
+        elif isinstance(stmt, IfStmt):
+            if self.has_return_stmt(stmt.then_stmt):
+                return True
+            if stmt.else_stmt is not None:
+                if self.has_return_stmt(stmt.else_stmt):
+                    return True
+
+        # Check the body of a while loop
+        elif isinstance(stmt, WhileStmt):
+            if self.has_return_stmt(stmt.stmt):
+                return True
+
+        # No return found
         return False
 
 
