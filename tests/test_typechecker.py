@@ -12,7 +12,7 @@ def typechecker_tester(program=None, struct_dict=None, func_dict=None):
     typechecker.func_dict = func_dict or {}
     return typechecker
 
-
+# tests get_struct
 @pytest.mark.parametrize(
     "program_source, expected_struct_dict",
     [
@@ -35,7 +35,28 @@ def test_get_struct(program_source, expected_struct_dict):
 
     assert test.struct_dict == expected_struct_dict
 
+# tests get_func
+@pytest.mark.parametrize(
+    "program_source, expected_func_dict",
+    [
+        (
+            "(func add_one ((int value)) int (vardec int retval) (assign retval (+ value 1)) (return retval))",
+            {
+                "add_one": {
+                    "param_types": [IntType()],
+                    "return": IntType(),
+                }
+            },
+        ),
+    ]
+)
+def test_get_func(program_source, expected_func_dict):
+    program = Parser(tokenize(program_source)).parse_program()
+    test = Typechecker(program)
 
+    test.get_func()
+
+    assert test.func_dict == expected_func_dict
 
 
 @pytest.mark.parametrize(
