@@ -1,4 +1,7 @@
 import pytest
+
+from src.lexer.tokenizer import tokenize
+from src.parser.parser import Parser
 from src.typechecker.typechecker import Typechecker
 from src.parser.nodes import *
 
@@ -8,6 +11,31 @@ def typechecker_tester(program=None, struct_dict=None, func_dict=None):
     typechecker.struct_dict = struct_dict or {}
     typechecker.func_dict = func_dict or {}
     return typechecker
+
+
+@pytest.mark.parametrize(
+    "program_source, expected_struct_dict",
+    [
+        (
+            "(struct Node (int value) ((* Node) next))",
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node")),
+                }
+            },
+        ),
+    ]
+)
+def test_get_struct(program_source, expected_struct_dict):
+    program = Parser(tokenize(program_source)).parse_program()
+    test = Typechecker(program)
+
+    test.get_struct()
+
+    assert test.struct_dict == expected_struct_dict
+
+
 
 
 @pytest.mark.parametrize(
