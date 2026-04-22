@@ -1,6 +1,4 @@
 from src.parser.parser import *
-from src.lexer.tokenizer import tokenize
-
 
 class Typechecker:
 
