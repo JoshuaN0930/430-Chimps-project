@@ -263,3 +263,41 @@ def test_typecheck_struct(struct_def, struct_dict, expected_struct_dict):
     typechecker = typechecker_tester(struct_dict=struct_dict)
     typechecker.typecheck_struct(struct_def)
     assert typechecker.struct_dict == expected_struct_dict
+
+
+@pytest.mark.parametrize(
+    "types, struct_dict, expected",
+    [
+        (IntType(), {}, IntType()),
+        (VoidType(), {}, VoidType()),
+        (
+            StructType("Node"),
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node")),
+                }
+            },
+            StructType("Node"),
+        ),
+        (
+            PointerType(IntType()),
+            {},
+            PointerType(IntType()),
+        ),
+        (
+            PointerType(StructType("Node")),
+            {
+                "Node": {
+                    "value": IntType(),
+                    "next": PointerType(StructType("Node")),
+                }
+            },
+            PointerType(StructType("Node")),
+        ),
+    ]
+)
+def test_check_type(types, struct_dict, expected):
+    typechecker = typechecker_tester(struct_dict=struct_dict)
+    result = typechecker.check_type(types)
+    assert result == expected
