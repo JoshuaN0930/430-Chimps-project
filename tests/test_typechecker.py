@@ -58,6 +58,41 @@ def test_get_func(program_source, expected_func_dict):
 
     assert test.func_dict == expected_func_dict
 
+# Tests typecheck_func
+@pytest.mark.parametrize(
+    "func_def, func_dict",
+    [
+        (
+            FuncDef(
+                name="add_one",
+                params=[Param(type=IntType(), name="value")],
+                Rtype=IntType(),
+                body=[
+                    VarDecStmt(type=IntType(), name="retval"),
+                    AssignStmt(
+                        lhs=VarAssign("retval"),
+                        exp=BinaryOpExp(
+                            op=AddOp(),
+                            first_exp=LhsExp(lhs=VarAssign("value")),
+                            second_exp=IntLiteralExp(int_value=1),
+                        ),
+                    ),
+                    ReturnStmt(exp=LhsExp(lhs=VarAssign("retval"))),
+                ],
+            ),
+            {
+                "add_one": {
+                    "param_types": [IntType()],
+                    "return": IntType(),
+                }
+            },
+        ),
+    ]
+)
+def test_typecheck_func(func_def, func_dict):
+    typechecker = typechecker_tester(func_dict=func_dict)
+    typechecker.typecheck_func(func_def)
+    assert typechecker.func_dict == func_dict
 
 @pytest.mark.parametrize(
     "lhs, env, struct_dict, expected",
