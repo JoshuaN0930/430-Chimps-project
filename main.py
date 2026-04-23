@@ -4,7 +4,23 @@ from src.lexer.tokenizer import tokenize
 from src.parser.parser import Parser
 from src.typechecker.typechecker import Typechecker
 
+
 def format_ast(node, indent=0):
+    """
+    Format an abstract syntax tree node into a readable string.
+
+    Parameters
+    ----------
+    node
+        The AST node or value to format.
+    indent : int, optional
+        The current indentation level.
+
+    Returns
+    -------
+    str
+        A formatted string representation of the AST.
+    """
     pad = "  " * indent
     if is_dataclass(node):
         lines = [f"{pad}{type(node).__name__}"]
@@ -26,7 +42,20 @@ def format_ast(node, indent=0):
         return "\n".join(lines)
     return f"{pad}{node!r}"
 
+
 def main():
+    """
+    Run the lexer, parser, and typechecker on Chimp source code.
+
+    Reads source code either from a `.chimp` file passed as a command-line
+    argument or from terminal input. Then tokenizes, parses, prints the AST,
+    and runs typechecking.
+
+    Raises
+    ------
+    SystemExit
+        Raised when input is invalid or when parsing/typechecking fails.
+    """
     # for reading from a file chimps code
     if len(sys.argv) > 1:
         filepath = sys.argv[1]
@@ -38,7 +67,6 @@ def main():
     #for using terminal to input chimps code
     else:
         source = input(">>>")
-
 
     tokens = tokenize(source)
     print("--- tokens ---")
