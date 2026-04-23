@@ -3,37 +3,97 @@ from typing import List
 from src.lexer.token import Token, TokenType
 from src.parser.nodes import *
 
+
 class ParserError(Exception):
+    """
+    Represents a parsing error with source line information.
+
+    Parameters
+    ----------
+    message : str
+        The error message.
+    line : int
+        The line where the parsing error occurred.
+    """
+
     def __init__(self, message: str, line: int):
         super().__init__(f"Line {line}: {message}")
 
-class Parser:
-    #---Core Helpers---
 
-    #entry point 
+class Parser:
+    """Parses a list of tokens into the program's abstract syntax tree."""
+
+    # ---Core Helpers---
+
+    # entry point
     def __init__(self, tokens: List[Token]):
+        """
+        Initialize the parser.
+
+        Parameters
+        ----------
+        tokens : List[Token]
+            The list of tokens to parse.
+        """
         self.tokens = tokens
         self.pos = 0
-    
-    #look at current token without consuming it
+
+    # look at current token without consuming it
     def peek(self) -> Token:
+        """
+        Return the current token without consuming it.
+
+        Returns
+        -------
+        Token
+            The current token.
+        """
         return self.tokens[self.pos]
-    
-    #look at keyword
+
+    # look at keyword
     def peek_keyword(self) -> Token:
+        """
+        Return the type of the next token.
+
+        Returns
+        -------
+        Token
+            The type of the next token.
+        """
         return self.tokens[self.pos + 1].type
-    
-    #"Grab the current token and advance pos by 1
+
+    # "Grab the current token and advance pos by 1
     def consume(self, expected: TokenType = None) -> Token:
+        """
+        Consume the current token and optionally check its type.
+
+        Parameters
+        ----------
+        expected : TokenType, optional
+            The expected token type.
+
+        Returns
+        -------
+        Token
+            The consumed token, or None if the expected type does not match.
+        """
         token = self.tokens[self.pos]
         if expected and token.type != expected:
             return None
         self.pos += 1
         return token
-    
+
     def at_end(self) -> bool:
+        """
+        Check whether all tokens have been consumed.
+
+        Returns
+        -------
+        bool
+            True if the parser is at the end of the token list, otherwise False.
+        """
         return self.pos >= len(self.tokens)
-    
+
     """
         Type Parsing
         type ::= int - integers
@@ -41,113 +101,175 @@ class Parser:
                  structname - indentifier used as type 
                  (* type ) pointer - recurses
         """
+
     def parse_type(self) -> Type:
-       
+        """
+        Parse a type.
+
+        Returns
+        -------
+        Type
+            The parsed type node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the current token does not form a valid type.
+        """
         token = self.peek()
 
         if token.type == TokenType.INT:
             self.consume(TokenType.INT)
             return IntType()
-        
+
         elif token.type == TokenType.VOID:
             self.consume(TokenType.VOID)
             return VoidType()
-        
+
         elif token.type == TokenType.IDENTIFIER:
             token = self.consume(TokenType.IDENTIFIER)
             return StructType(name=token.value)
-        
+
         elif token.type == TokenType.LParen:
-            #(* type)
+            # (* type)
             self.consume(TokenType.LParen)
 
             if not self.consume(TokenType.Star):
                 raise ParserError("expected '*' for pointer type", self.peek().line)
-            
+
             inner = self.parse_type()
 
             if not self.consume(TokenType.RParen):
                 raise ParserError("missing closing ')' in pointer type", self.peek().line)
-            
+
             return PointerType(inner=inner)
-        
+
         raise ParserError(
             f"'{token.value}' is not a valid type: expected int, void, struc name, or (* type) pointer",
             token.line
         )
-    
+
     """
         Param Parsing
         param :: = `(` type var `)`
     """
+
     def parse_param(self):
+        """
+        Parse a parameter declaration.
+
+        Returns
+        -------
+        Param
+            The parsed parameter node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the parameter syntax is invalid.
+        """
         if not self.consume(TokenType.LParen):
             raise ParserError("missing opening '(' in parameter", self.peek().line)
-        
+
         type_node = self.parse_type()
         name_tok = self.consume(TokenType.IDENTIFIER)
         if not name_tok:
             raise ParserError("missing parameter name", self.peek().line)
-        
+
         if not self.consume(TokenType.RParen):
             raise ParserError("missing closing ')' in parameter", self.peek().line)
-        
+
         return Param(type=type_node, name=name_tok.value)
 
     """
         Structure Parsing
         structdef ::= `(` `struct` structname param* `)`
     """
+
     def parse_struct(self):
+        """
+        Parse a struct definition.
+
+        Returns
+        -------
+        StructDef
+            The parsed struct definition.
+
+        Raises
+        ------
+        ParserError
+            Raised when the struct definition is malformed.
+        """
         if not self.consume(TokenType.LParen):
             raise ParserError("missing opening '(' in struct definition", self.peek().line)
-        
+
         if not self.consume(TokenType.STRUCT):
             raise ParserError("expected 'struct' keyword", self.peek().line)
 
         name_tok = self.consume(TokenType.IDENTIFIER)
         if not name_tok:
             raise ParserError("expected struct name after 'struct'", self.peek().line)
-        
-        params = [] 
+
+        params = []
         while self.peek().type != TokenType.RParen:
             if self.at_end():
                 raise ParserError("missing closing ')' in struct definition", self.peek().line)
             params.append(self.parse_param())
-        
+
         if not self.consume(TokenType.RParen):
             raise ParserError("missing closing ')' in struct definition", self.peek().line)
-                
+
         return StructDef(name=name_tok.value, params=params)
-    
+
     def parse_structDefs(self) -> list[StructDef]:
+        """
+        Parse all struct definitions at the start of the program.
+
+        Returns
+        -------
+        list[StructDef]
+            A list of parsed struct definitions.
+        """
         result = []
         while not self.at_end() and self.peek().type == TokenType.LParen:
             if self.peek_keyword() == TokenType.STRUCT:
                 result.append(self.parse_struct())
-            else: 
-                break 
+            else:
+                break
         return result
-    
 
     """
         Fucntion Parsing
         fdef ::= `(` `func` funcname `(` param* `)` type stmt* `)`
     """
+
     def parse_func(self):
+        """
+        Parse a function definition.
+
+        Returns
+        -------
+        FuncDef
+            The parsed function definition.
+
+        Raises
+        ------
+        ParserError
+            Raised when the function definition is malformed.
+        """
         if not self.consume(TokenType.LParen):
             raise ParserError("missing opening '(' in function definition", self.peek().line)
-        
+
         if not self.consume(TokenType.FUNC):
             raise ParserError("expected 'func' keyword", self.peek().line)
-        
+
         name_tok = self.consume(TokenType.IDENTIFIER)
         if not name_tok:
             raise ParserError("expected function name after 'func'", self.peek().line)
-        
+
         if not self.consume(TokenType.LParen):
             raise ParserError("missing opening '(' in parameter list", self.peek().line)
-        
+
         params = []
         while self.peek().type != TokenType.RParen:
             if self.at_end():
@@ -156,7 +278,7 @@ class Parser:
 
         if not self.consume(TokenType.RParen):
             raise ParserError("missing closing ')' in paramter list", self.peek().line)
-        
+
         token_type = self.parse_type()
 
         body = []
@@ -167,10 +289,23 @@ class Parser:
 
         if not self.consume(TokenType.RParen):
             raise ParserError("missing closing ')' in function body", self.peek().line)
-        
+
         return FuncDef(name=name_tok.value, params=params, Rtype=token_type, body=body)
-    
+
     def parse_funcDefs(self) -> list[FuncDef]:
+        """
+        Parse all function definitions after struct definitions.
+
+        Returns
+        -------
+        list[FuncDef]
+            A list of parsed function definitions.
+
+        Raises
+        ------
+        ParserError
+            Raised when a struct definition appears after functions begin.
+        """
         result = []
         while not self.at_end() and self.peek().type == TokenType.LParen:
             if self.peek_keyword() == TokenType.STRUCT:
@@ -187,6 +322,19 @@ class Parser:
     """
 
     def parse_op(self) -> Op:
+        """
+        Parse an operator.
+
+        Returns
+        -------
+        Op
+            The parsed operator node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the current token is not a valid operator.
+        """
         token = self.peek()
         op_dict = {
             TokenType.Plus: AddOp,
@@ -212,6 +360,19 @@ class Parser:
     """
 
     def parse_lhs(self) -> Lhs:
+        """
+        Parse a left-hand side expression.
+
+        Returns
+        -------
+        Lhs
+            The parsed left-hand side node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the token sequence does not form a valid left-hand side.
+        """
         token = self.peek()
 
         if token.type == TokenType.IDENTIFIER:
@@ -226,7 +387,7 @@ class Parser:
                 inner = self.parse_lhs()
                 field_value = self.consume(TokenType.IDENTIFIER)
                 self.consume(TokenType.RParen)
-                return FieldStructAssign(var= field_value.value, lhs=inner)
+                return FieldStructAssign(var=field_value.value, lhs=inner)
 
             elif self.peek().type == TokenType.Star:
                 self.consume(TokenType.Star)
@@ -243,10 +404,10 @@ class Parser:
             f"Expected a LHS , got {token.type.name}",
             token.line
         )
+
     """
     ##############################################################
     """
-
 
     """
     ##################### Expression Parsing #####################
@@ -254,6 +415,14 @@ class Parser:
 
     # Used for binary expressions
     def parse_binary_exp(self) -> BinaryOpExp:
+        """
+        Parse a parenthesized binary expression.
+
+        Returns
+        -------
+        BinaryOpExp
+            The parsed binary expression node.
+        """
         self.consume(TokenType.LParen)
         op = self.parse_op()
         first = self.parse_exp()
@@ -262,11 +431,24 @@ class Parser:
         return BinaryOpExp(op=op, first_exp=first, second_exp=second)
 
     def parse_exp(self) -> Exp:
+        """
+        Parse an expression.
+
+        Returns
+        -------
+        Exp
+            The parsed expression node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the token sequence does not form a valid expression.
+        """
         token = self.peek()
 
         if token.type == TokenType.INTEGER:
             self.consume(TokenType.INTEGER)
-            return IntLiteralExp(int_value= token.value)
+            return IntLiteralExp(int_value=token.value)
 
         elif token.type == TokenType.TRUE:
             self.consume(TokenType.TRUE)
@@ -276,7 +458,7 @@ class Parser:
             self.consume(TokenType.FALSE)
             return BooleanLiteralExp(boolean=False)
 
-    ################### LHS Expression ###################:
+        ################### LHS Expression ###################:
         elif token.type == TokenType.IDENTIFIER:
             return LhsExp(lhs=self.parse_lhs())
 
@@ -306,7 +488,7 @@ class Parser:
 
                 second = self.parse_exp()
                 self.consume(TokenType.RParen)
-                return BinaryOpExp(op= MultiplyOp(), first_exp= first, second_exp= second)
+                return BinaryOpExp(op=MultiplyOp(), first_exp=first, second_exp=second)
 
             elif next_token.type == TokenType.ADDRESS:
                 self.consume(TokenType.LParen)
@@ -335,13 +517,13 @@ class Parser:
                     exps.append(self.parse_exp())
 
                 self.consume(TokenType.RParen)
-                return FunctionCallExp(func_name= func_name.value, exp= exps)
+                return FunctionCallExp(func_name=func_name.value, exp=exps)
 
             raise ParserError(
                 f"Unknown parenthesized expression starting with {next_token.type.name}",
                 next_token.line
             )
-    ######################################################
+        ######################################################
 
         elif token.type == TokenType.NULL:
             self.consume(TokenType.NULL)
@@ -367,11 +549,24 @@ class Parser:
                  (println exp) - printing something
                  (stmt exp) - expression statements
     """
+
     def parse_stmt(self):
+        """
+        Parse a statement.
+
+        Returns
+        -------
+        Stmt
+            The parsed statement node.
+
+        Raises
+        ------
+        ParserError
+            Raised when the token sequence does not form a valid statement.
+        """
         if self.peek().type != TokenType.LParen:
             raise ParserError(f"Expected '(' to start statement", self.peek().line)
-        
-        
+
         head = self.tokens[self.pos + 1]
 
         # Statement Dictionary
@@ -387,13 +582,22 @@ class Parser:
         }
         if head.type in stmt_dict:
             return stmt_dict[head.type]()
-        
+
         raise ParserError(f"Unknown statement '{head.value}'", head.line)
 
     """
         stmt ::= (vardec type var) 
     """
+
     def parse_vardec(self) -> VarDecStmt:
+        """
+        Parse a variable declaration statement.
+
+        Returns
+        -------
+        VarDecStmt
+            The parsed variable declaration statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.VARDEC)
         type_node = self.parse_type()
@@ -404,18 +608,36 @@ class Parser:
     """
         stmt ::= (assign lhs exp)
     """
+
     def parse_assign(self) -> AssignStmt:
+        """
+        Parse an assignment statement.
+
+        Returns
+        -------
+        AssignStmt
+            The parsed assignment statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.ASSIGN)
         lhs = self.parse_lhs()
         exp = self.parse_exp()
         self.consume(TokenType.RParen)
-        return AssignStmt(lhs= lhs, exp= exp)
+        return AssignStmt(lhs=lhs, exp=exp)
 
     """
         stmt ::= (while exp stmt)
     """
+
     def parse_while(self) -> WhileStmt:
+        """
+        Parse a while statement.
+
+        Returns
+        -------
+        WhileStmt
+            The parsed while statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.WHILE)
         exp = self.parse_exp()
@@ -426,7 +648,16 @@ class Parser:
     """
         stmt ::= (if exp stmt [stmt])
     """
+
     def parse_if(self) -> IfStmt:
+        """
+        Parse an if statement.
+
+        Returns
+        -------
+        IfStmt
+            The parsed if statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.IF)
         exp = self.parse_exp()
@@ -443,6 +674,14 @@ class Parser:
     """
 
     def parse_return(self) -> ReturnStmt:
+        """
+        Parse a return statement.
+
+        Returns
+        -------
+        ReturnStmt
+            The parsed return statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.RETURN)
         if self.peek().type == TokenType.RParen:
@@ -455,7 +694,16 @@ class Parser:
     """
         stmt ::= (block stmt*)
     """
+
     def parse_block(self) -> BlockStmt:
+        """
+        Parse a block statement.
+
+        Returns
+        -------
+        BlockStmt
+            The parsed block statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.BLOCK)
         stmts = []
@@ -468,7 +716,16 @@ class Parser:
     """
         stmt ::= (println exp)
     """
+
     def parse_println(self) -> PrintlnStmt:
+        """
+        Parse a println statement.
+
+        Returns
+        -------
+        PrintlnStmt
+            The parsed println statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.PRINTLN)
         exp = self.parse_exp()
@@ -478,14 +735,36 @@ class Parser:
     """
         stmt ::= (stmt exp)
     """
+
     def parse_exp_stmt(self) -> ExpStmt:
+        """
+        Parse an expression statement.
+
+        Returns
+        -------
+        ExpStmt
+            The parsed expression statement.
+        """
         self.consume(TokenType.LParen)
         self.consume(TokenType.STMT)
         exp = self.parse_exp()
         self.consume(TokenType.RParen)
         return ExpStmt(exp=exp)
-    
+
     def parse_stmts(self) -> list[Stmt]:
+        """
+        Parse all top-level statements remaining in the program.
+
+        Returns
+        -------
+        list[Stmt]
+            A list of parsed statements.
+
+        Raises
+        ------
+        ParserError
+            Raised when struct or function definitions appear after statements begin.
+        """
         result = []
         while not self.at_end():
             if self.peek().type == TokenType.LParen:
@@ -496,17 +775,21 @@ class Parser:
             result.append(self.parse_stmt())
         return result
 
-
     """
         Program  Parsing
         program ::= structdef* fdef* stmt* - stmt* is the entry point
     """
+
     def parse_program(self) -> Program:
+        """
+        Parse the full program.
+
+        Returns
+        -------
+        Program
+            The parsed program root node.
+        """
         structs = self.parse_structDefs()
         funcs = self.parse_funcDefs()
         stmts = self.parse_stmts()
         return Program(structs=structs, funcs=funcs, stmts=stmts)
-
-
-
-
