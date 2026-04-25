@@ -310,6 +310,8 @@ class Typechecker:
         if isinstance(type_value, PointerType):
             self.check_type(type_value.inner)
             return type_value
+        if isinstance(type_value, BoolType):
+            return type_value
         raise Exception(f"Invalid type: {type_value}")
 
     # Checks that a type is valid and not void

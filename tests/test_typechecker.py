@@ -257,13 +257,131 @@ def test_typechecker_stmt(stmt, env, return_type, expected_env):
                 }
             }
         ),
+          (
+            StructDef(
+                name="Increment",
+                params=[
+                    Param(type=IntType(), name="count")
+                ]
+            ),
+            {"Increment": {}},
+            {
+                "Increment": {
+                    "count": IntType()
+                }
+            }
+        ),
+        (
+            StructDef(
+                name="detect_lie",
+                params=[Param(type=BoolType(), name="truth")]
+            ),
+            {"detect_lie": {}},
+            {
+                "detect_lie": {
+                    "truth": BoolType()
+                }
+            }
+            
+        ),
+        (
+             StructDef(
+                name="Empty",
+                params=[]
+            ),
+            {"Empty": {}},
+            {
+                "Empty": {}
+            }
+        ),
+        (
+             StructDef(
+                name="Dog",
+                params=[
+                    Param(type=PointerType(StructType("Pet")), name="Cupcake")
+                ]
+            ),
+            {"Dog": {}, "Pet": {}},
+            {
+                "Dog": {
+                    "Cupcake": PointerType(StructType("Pet"))
+                },
+                "Pet": {}
+            }
+        ),
+        (
+             StructDef(
+                name="Tree",
+                params=[
+                    Param(type=IntType(), name="value"),
+                    Param(type=PointerType(StructType("Tree")), name="left"),
+                    Param(type=PointerType(StructType("Tree")), name="right"),
+                ]
+            ),
+            {"Tree": {}},
+            {
+                "Tree": {
+                    "value": IntType(),
+                    "left": PointerType(StructType("Tree")),
+                    "right": PointerType(StructType("Tree"))
+                }
+            }
+        )
+
     ]
+    
 )
 def test_typecheck_struct(struct_def, struct_dict, expected_struct_dict):
     typechecker = typechecker_tester(struct_dict=struct_dict)
     typechecker.typecheck_struct(struct_def)
     assert typechecker.struct_dict == expected_struct_dict
 
+@pytest.mark.parametrize(
+    "struct_def, struct_dict, error_msg",
+    [
+        (
+            StructDef(
+                name="Fraudulent_Method",
+                params=[Param(type=IntType(), name="Fraud")]
+            ),
+            {},
+            None,   
+        ),
+        (
+            StructDef(
+                name="Dog",
+                params=[Param(type=PointerType(StructType("Pet")), name="pet")]
+            ),
+            {"Dog": {}},
+            "Invalid struct type",
+        ),
+        (
+            StructDef(
+                name="Bad",
+                params=[Param(type=VoidType(), name="ReallyBad")]
+            ),
+            {"Bad": {}},
+            None,
+        ),
+         (
+            StructDef(
+                name="RandomStuff",
+                params=[Param(type=VoidType(), name="idk")]
+            ),
+            {"RandomStuff": {}},
+            "void is not allowed",
+        ),
+    ]
+)
+def test_typecheck_struct_errors(struct_def, struct_dict, error_msg):
+    tc = typechecker_tester(struct_dict=struct_dict)
+
+    if error_msg is None:
+        with pytest.raises(Exception):
+            tc.typecheck_struct(struct_def)
+    else:
+        with pytest.raises(Exception, match=error_msg):
+            tc.typecheck_struct(struct_def)
 
 @pytest.mark.parametrize(
     "types, struct_dict, expected",
