@@ -271,19 +271,7 @@ def test_typechecker_stmt(stmt, env, return_type, expected_env):
                 }
             }
         ),
-        (
-            StructDef(
-                name="detect_lie",
-                params=[Param(type=BoolType(), name="truth")]
-            ),
-            {"detect_lie": {}},
-            {
-                "detect_lie": {
-                    "truth": BoolType()
-                }
-            }
-            
-        ),
+        
         (
              StructDef(
                 name="Empty",
@@ -370,6 +358,15 @@ def test_typecheck_struct(struct_def, struct_dict, expected_struct_dict):
             ),
             {"RandomStuff": {}},
             "void is not allowed",
+        ),
+        (
+            StructDef(
+                name="detect_lie",
+                params=[Param(type=BoolType(), name="truth")]
+            ),
+            {"detect_lie": {}},
+            "Invalid type: BoolType",
+            
         ),
     ]
 )
