@@ -1,15 +1,53 @@
 from src.parser.parser import *
 
+
 class Typechecker:
+    """
+    Typechecks a parsed program.
+
+    This class validates:
+    - struct definitions
+    - function definitions
+    - variable declarations
+    - assignments
+    - expressions
+    - return statements
+    - top-level statements
+
+    Parameters
+    ----------
+    program : Program
+        The parsed program AST to typecheck.
+    """
 
     def __init__(self, program: Program):
+        """
+        Initialize the typechecker.
+
+        Parameters
+        ----------
+        program : Program
+            The parsed program to check.
+        """
         self.program = program
         self.struct_dict = {}
         self.func_dict = {}
 
-
-
     def typecheck(self):
+        """
+        Run typechecking on the full program.
+
+        This method:
+        - collects and validates all structs
+        - collects and validates all functions
+        - typechecks each function body
+        - typechecks all top-level statements
+
+        Raises
+        ------
+        Exception
+            Raised when any type rule is violated.
+        """
         self.get_struct()
         self.get_func()
 
@@ -23,19 +61,49 @@ class Typechecker:
                 raise Exception("Return statement not allowed outside a function")
             self.typecheck_stmt(stmt, env_variable, VoidType())
 
-
     def typecheck_struct(self, struct):
+        """
+        Typecheck a single struct definition.
+
+        Ensures that:
+        - field names are unique
+        - field types are valid and non-void
+
+        Parameters
+        ----------
+        struct : StructDef
+            The struct definition to check.
+
+        Raises
+        ------
+        Exception
+            Raised if a duplicate field is found or a field type is invalid.
+        """
         field_dict = self.struct_dict[struct.name]
 
         for field in struct.params:
             if field.name in field_dict:
                 raise Exception(f'Duplicate field found: {field.name} in struct {struct.name}')
-            
-            field_type = self.check_nonvoid_type(field.type, f"field {field.name} of struct {struct.name}")
+
+            field_type = self.check_nonvoid_type(
+                field.type,
+                f"field {field.name} of struct {struct.name}"
+            )
             field_dict[field.name] = field_type
 
     # Places each struct in the program into a dictionary
     def get_struct(self):
+        """
+        Collect and validate all struct definitions in the program.
+
+        This method first records every struct name, then typechecks
+        each struct's fields.
+
+        Raises
+        ------
+        Exception
+            Raised if duplicate struct names are found.
+        """
         for struct in self.program.structs:
             # Checks if a struct with the same name is already in the dictionary
             if struct.name in self.struct_dict:
@@ -48,9 +116,25 @@ class Typechecker:
             # Typechecks the fields of each struct and fills in its field dictionary
             self.typecheck_struct(struct)
 
-
     # Places each function in the program into a dictionary
     def get_func(self):
+        """
+        Collect and validate all function definitions in the program.
+
+        This method records:
+        - function names
+        - parameter types
+        - return types
+
+        It also checks that parameter names are unique and that
+        parameter types are valid and non-void.
+
+        Raises
+        ------
+        Exception
+            Raised if duplicate function names or duplicate parameter
+            names are found, or if a parameter type is invalid.
+        """
         for funcs in self.program.funcs:
             # Checks if a function with the same name is already in the dictionary
             if funcs.name in self.func_dict:
@@ -58,15 +142,18 @@ class Typechecker:
 
             param_names = set()
             param_types = []
+
             # Checks for any duplicate parameters
             for param in funcs.params:
                 if param.name in param_names:
                     raise Exception(f'Duplicate parameter with the same name found: {param.name}')
                 param_names.add(param.name)
                 param_types.append(
-                    self.check_nonvoid_type(param.type, f"parameter {param.name} of function {funcs.name}")
+                    self.check_nonvoid_type(
+                        param.type,
+                        f"parameter {param.name} of function {funcs.name}"
+                    )
                 )
-
 
             rtype = self.check_type(funcs.Rtype)
 
@@ -75,9 +162,27 @@ class Typechecker:
                 "return": rtype
             }
 
-
     def typecheck_func(self, func):
+        """
+        Typecheck a single function definition.
 
+        This method:
+        - creates a variable environment for parameters
+        - validates parameter declarations
+        - typechecks every statement in the function body
+        - checks that non-void functions have a guaranteed return
+
+        Parameters
+        ----------
+        func : FuncDef
+            The function definition to typecheck.
+
+        Raises
+        ------
+        Exception
+            Raised when the function contains invalid statements,
+            duplicate parameters, or missing returns.
+        """
         var_env = {}
         return_type = self.check_type(func.Rtype)
 
@@ -93,11 +198,33 @@ class Typechecker:
             if not self.good_return_body(func.body):
                 raise Exception(f"Function {func.name} may not return a value")
 
-
-
-
-
     def typecheck_lhs(self, left_hand, env_variable) -> Type:
+        """
+        Typecheck a left-hand side expression.
+
+        A left-hand side can be:
+        - a variable
+        - a struct field access
+        - a dereferenced pointer target
+
+        Parameters
+        ----------
+        left_hand
+            The left-hand side node or assignment statement.
+        env_variable : dict
+            The current variable environment.
+
+        Returns
+        -------
+        Type
+            The type of the left-hand side.
+
+        Raises
+        ------
+        Exception
+            Raised if the left-hand side is invalid or refers to an
+            undeclared variable, unknown struct, or non-pointer dereference.
+        """
         if isinstance(left_hand, AssignStmt):
             lhs = left_hand.lhs
         else:
@@ -108,14 +235,14 @@ class Typechecker:
             # Make sure the variable exists in the current environment
             if lhs.var not in env_variable:
                 raise Exception(f"Variable not found: {lhs.var}")
-            #returns type of the variable
+            # returns type of the variable
             return env_variable[lhs.var]
 
         # Struct field assignment: (assign (. first value) 1)
         if isinstance(lhs, FieldStructAssign):
             # typecheck the base part before the field
             base_type = self.typecheck_lhs(lhs.lhs, env_variable)
-            #base must be a struct type
+            # base must be a struct type
             if not isinstance(base_type, StructType):
                 raise Exception(f"Variable is not a valid StructType for field access: '{lhs.var}'")
             # make sure the struct exists in the struct dictionary
@@ -142,8 +269,34 @@ class Typechecker:
 
         raise Exception(f"Invalid lhs: {lhs}")
 
-
     def typecheck_stmt(self, stmt, var_env, return_type):
+        """
+        Typecheck a statement.
+
+        This method validates:
+        - variable declarations
+        - assignments
+        - while statements
+        - if statements
+        - blocks
+        - println statements
+        - expression statements
+        - return statements
+
+        Parameters
+        ----------
+        stmt : Stmt
+            The statement to typecheck.
+        var_env : dict
+            The current variable environment.
+        return_type : Type
+            The expected return type of the current function.
+
+        Raises
+        ------
+        Exception
+            Raised when a statement violates the language's type rules.
+        """
         if isinstance(stmt, VarDecStmt):
             if stmt.name in var_env:
                 raise Exception(f"Variable with same name in use: {stmt.name}")
@@ -174,13 +327,11 @@ class Typechecker:
             if stmt.else_stmt is not None:
                 self.typecheck_stmt(stmt.else_stmt, var_env.copy(), return_type)
 
-
         elif isinstance(stmt, BlockStmt):
             list_of_stmt = stmt.stmt
             block_env = var_env.copy()
             for stmts in list_of_stmt:
                 self.typecheck_stmt(stmts, block_env, return_type)
-
 
         elif isinstance(stmt, PrintlnStmt):
             exp_type = self.typechecker_exp(stmt.exp, var_env)
@@ -211,33 +362,58 @@ class Typechecker:
         else:
             raise Exception(f"Invalid statement: {stmt}")
 
-
-
-
-
     def typechecker_exp(self, exp, env_variable) -> Type:
+        """
+        Typecheck an expression.
 
-        #exp = 5
+        Supported expressions include:
+        - integer literals
+        - boolean literals
+        - null
+        - left-hand side expressions
+        - address-of expressions
+        - dereference expressions
+        - binary operator expressions
+        - function calls
+
+        Parameters
+        ----------
+        exp : Exp
+            The expression to typecheck.
+        env_variable : dict
+            The current variable environment.
+
+        Returns
+        -------
+        Type
+            The type of the expression.
+
+        Raises
+        ------
+        Exception
+            Raised when an expression is not well-typed.
+        """
+        # exp = 5
         if isinstance(exp, IntLiteralExp):
             return IntType()
 
-        #exp = true/false
+        # exp = true/false
         elif isinstance(exp, BooleanLiteralExp):
             return BoolType()
 
-        #exp = null
+        # exp = null
         elif isinstance(exp, NullExp):
             return NullType()
 
-        #exp = lhs
+        # exp = lhs
         elif isinstance(exp, LhsExp):
             return self.typecheck_lhs(exp.lhs, env_variable)
 
-        #exp = & lhs
+        # exp = & lhs
         elif isinstance(exp, AddressOfExp):
             return PointerType(inner=self.typecheck_lhs(exp.lhs, env_variable))
 
-        #exp = * exp
+        # exp = * exp
         elif isinstance(exp, DerefExp):
             t = self.typechecker_exp(exp.exp, env_variable)
             if not isinstance(t, PointerType):
@@ -245,35 +421,35 @@ class Typechecker:
 
             return t.inner
 
-        #exp = (op exp exp)
+        # exp = (op exp exp)
         elif isinstance(exp, BinaryOpExp):
-            left_type  = self.typechecker_exp(exp.first_exp, env_variable)
+            left_type = self.typechecker_exp(exp.first_exp, env_variable)
             right_type = self.typechecker_exp(exp.second_exp, env_variable)
             op = exp.op
 
             # Binop
             if isinstance(op, (AddOp, MinusOp, MultiplyOp, DivideOp)):
-                if not isinstance(left_type, IntType) or  not isinstance(right_type, IntType):
+                if not isinstance(left_type, IntType) or not isinstance(right_type, IntType):
                     raise Exception(f"Arithmetic operators require int operands, got ({left_type}) , ({right_type})")
                 return IntType()
 
-            # < comparasion
+            # < comparison
             if isinstance(op, LessThanOp):
                 if not isinstance(left_type, IntType) or not isinstance(right_type, IntType):
                     raise Exception(f"require int on left and right, got ({left_type}) ({right_type})")
                 return BoolType()
 
-            #== !=
+            # == !=
             if isinstance(op, (EqualOp, NotEqualOp)):
-               if not self.types_compatible(left_type, right_type):
-                   raise Exception(f"Cannot compare {left_type} with {right_type}")
-               return BoolType()
+                if not self.types_compatible(left_type, right_type):
+                    raise Exception(f"Cannot compare {left_type} with {right_type}")
+                return BoolType()
 
             raise Exception(f"Unknown operator: {op}")
 
-        #exp = call funcname exp*
+        # exp = call funcname exp*
         elif isinstance(exp, FunctionCallExp):
-            #func must already exist
+            # func must already exist
             if exp.func_name not in self.func_dict:
                 raise Exception(f"Unknown Function: {exp.func_name}")
 
@@ -283,9 +459,11 @@ class Typechecker:
 
             # check arity
             if len(exp.exp) != len(expected_params):
-                raise Exception(f"Function {exp.func_name} expects arity {len(expected_params)}, got arity {len(exp.exp)}")
+                raise Exception(
+                    f"Function {exp.func_name} expects arity {len(expected_params)}, got arity {len(exp.exp)}"
+                )
 
-            #check var being passed in matches expected type
+            # check var being passed in matches expected type
             for i, (arg, expected_type) in enumerate(zip(exp.exp, expected_params)):
                 arg_type = self.typechecker_exp(arg, env_variable)
                 if not self.types_compatible(expected_type, arg_type):
@@ -295,10 +473,32 @@ class Typechecker:
 
         raise Exception(f"Unhandled expression: {exp}")
 
-
-
     # Check if it is a valid type
     def check_type(self, type_value: Type) -> Type:
+        """
+        Check whether a type is valid in the language.
+
+        Valid types include:
+        - int
+        - void
+        - defined struct types
+        - pointer types whose inner type is valid
+
+        Parameters
+        ----------
+        type_value : Type
+            The type to validate.
+
+        Returns
+        -------
+        Type
+            The validated type.
+
+        Raises
+        ------
+        Exception
+            Raised when the type is invalid.
+        """
         if isinstance(type_value, IntType):
             return type_value
         if isinstance(type_value, VoidType):
@@ -314,6 +514,27 @@ class Typechecker:
 
     # Checks that a type is valid and not void
     def check_nonvoid_type(self, type_value: Type, where: str) -> Type:
+        """
+        Check that a type is valid and not void.
+
+        Parameters
+        ----------
+        type_value : Type
+            The type to validate.
+        where : str
+            A short description of where the type appears, used for
+            error reporting.
+
+        Returns
+        -------
+        Type
+            The validated non-void type.
+
+        Raises
+        ------
+        Exception
+            Raised if the type is invalid or is void.
+        """
         # First makes sure the type itself is a valid type
         checked = self.check_type(type_value)
         # Raises an error if the type is void
@@ -323,10 +544,41 @@ class Typechecker:
 
     # Checks that a return type is valid
     def check_return_type(self, type_value: Type) -> Type:
+        """
+        Check that a function return type is valid.
+
+        Parameters
+        ----------
+        type_value : Type
+            The return type to validate.
+
+        Returns
+        -------
+        Type
+            The validated return type.
+        """
         return self.check_type(type_value)
 
-
     def types_compatible(self, t1: Type, t2: Type) -> bool:
+        """
+        Check whether two types are compatible.
+
+        This method allows:
+        - exact type equality
+        - null to be compatible with pointer types
+
+        Parameters
+        ----------
+        t1 : Type
+            The first type.
+        t2 : Type
+            The second type.
+
+        Returns
+        -------
+        bool
+            True if the types are compatible, otherwise False.
+        """
         if isinstance(t1, NullType) and isinstance(t2, PointerType):
             return True
         if isinstance(t2, NullType) and isinstance(t1, PointerType):
@@ -335,6 +587,19 @@ class Typechecker:
 
     # Checks if a statement always returns
     def good_return_stmt(self, stmt) -> bool:
+        """
+        Check whether a statement guarantees a return.
+
+        Parameters
+        ----------
+        stmt : Stmt
+            The statement to inspect.
+
+        Returns
+        -------
+        bool
+            True if the statement always returns, otherwise False.
+        """
         # return statement always returns
         if isinstance(stmt, ReturnStmt):
             return True
@@ -351,8 +616,8 @@ class Typechecker:
             if stmt.else_stmt is None:
                 return False
             return (
-                    self.good_return_stmt(stmt.then_stmt)
-                    and self.good_return_stmt(stmt.else_stmt)
+                self.good_return_stmt(stmt.then_stmt)
+                and self.good_return_stmt(stmt.else_stmt)
             )
 
         # while loop does not guarantee a return because it may not run
@@ -364,6 +629,20 @@ class Typechecker:
 
     # Checks if a function body has a guaranteed return
     def good_return_body(self, stmts) -> bool:
+        """
+        Check whether a function body guarantees a return.
+
+        Parameters
+        ----------
+        stmts : list[Stmt]
+            The list of statements in the function body.
+
+        Returns
+        -------
+        bool
+            True if at least one statement guarantees a return,
+            otherwise False.
+        """
         for stmt in stmts:
             # If one statement guarantees a return, then the body is good
             if self.good_return_stmt(stmt):
@@ -373,6 +652,23 @@ class Typechecker:
 
     # Checks if a statement contains a return anywhere inside it
     def has_return_stmt(self, stmt) -> bool:
+        """
+        Check whether a statement contains a return anywhere inside it.
+
+        This is used to reject return statements that appear outside of
+        function bodies.
+
+        Parameters
+        ----------
+        stmt : Stmt
+            The statement to inspect.
+
+        Returns
+        -------
+        bool
+            True if a return statement appears anywhere inside the
+            statement, otherwise False.
+        """
         # Direct return statement
         if isinstance(stmt, ReturnStmt):
             return True
