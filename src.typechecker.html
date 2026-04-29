@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.typechecker package &mdash; Chimps Compiler 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="src.parser package" href="src.parser.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Chimps Compiler
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html">src.lexer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html">src.parser package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.typechecker package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Chimps Compiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+      <li class="breadcrumb-item active">src.typechecker package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.typechecker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-typechecker-package">
+<h1>src.typechecker package<a class="headerlink" href="#src-typechecker-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.typechecker.typechecker">
+<span id="src-typechecker-typechecker-module"></span><h2>src.typechecker.typechecker module<a class="headerlink" href="#module-src.typechecker.typechecker" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.typechecker.typechecker.</span></span><span class="sig-name descname"><span class="pre">Typechecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.Program" title="src.parser.nodes.Program"><span class="pre">Program</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Typechecks a parsed program.</p>
+<p>This class validates:
+- struct definitions
+- function definitions
+- variable declarations
+- assignments
+- expressions
+- return statements
+- top-level statements</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>program<span class="classifier">Program</span></dt><dd><p>The parsed program AST to typecheck.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.check_nonvoid_type">
+<span class="sig-name descname"><span class="pre">check_nonvoid_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">where</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.check_nonvoid_type" title="Link to this definition"></a></dt>
+<dd><p>Check that a type is valid and not void.</p>
+<section id="id1">
+<h4>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>type_value<span class="classifier">Type</span></dt><dd><p>The type to validate.</p>
+</dd>
+<dt>where<span class="classifier">str</span></dt><dd><p>A short description of where the type appears, used for
+error reporting.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Type</dt><dd><p>The validated non-void type.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h4>Raises<a class="headerlink" href="#raises" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if the type is invalid or is void.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.check_return_type">
+<span class="sig-name descname"><span class="pre">check_return_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.check_return_type" title="Link to this definition"></a></dt>
+<dd><p>Check that a function return type is valid.</p>
+<section id="id2">
+<h4>Parameters<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>type_value<span class="classifier">Type</span></dt><dd><p>The return type to validate.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h4>Returns<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Type</dt><dd><p>The validated return type.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.check_type">
+<span class="sig-name descname"><span class="pre">check_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.check_type" title="Link to this definition"></a></dt>
+<dd><p>Check whether a type is valid in the language.</p>
+<p>Valid types include:
+- int
+- void
+- defined struct types
+- pointer types whose inner type is valid</p>
+<section id="id4">
+<h4>Parameters<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>type_value<span class="classifier">Type</span></dt><dd><p>The type to validate.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h4>Returns<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Type</dt><dd><p>The validated type.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h4>Raises<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised when the type is invalid.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.get_func">
+<span class="sig-name descname"><span class="pre">get_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.get_func" title="Link to this definition"></a></dt>
+<dd><p>Collect and validate all function definitions in the program.</p>
+<p>This method records:
+- function names
+- parameter types
+- return types</p>
+<p>It also checks that parameter names are unique and that
+parameter types are valid and non-void.</p>
+<section id="id7">
+<h4>Raises<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if duplicate function names or duplicate parameter
+names are found, or if a parameter type is invalid.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.get_struct">
+<span class="sig-name descname"><span class="pre">get_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.get_struct" title="Link to this definition"></a></dt>
+<dd><p>Collect and validate all struct definitions in the program.</p>
+<p>This method first records every struct name, then typechecks
+each struct’s fields.</p>
+<section id="id8">
+<h4>Raises<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if duplicate struct names are found.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.good_return_body">
+<span class="sig-name descname"><span class="pre">good_return_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmts</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.good_return_body" title="Link to this definition"></a></dt>
+<dd><p>Check whether a function body guarantees a return.</p>
+<section id="id9">
+<h4>Parameters<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>stmts<span class="classifier">list[Stmt]</span></dt><dd><p>The list of statements in the function body.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h4>Returns<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if at least one statement guarantees a return,
+otherwise False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.good_return_stmt">
+<span class="sig-name descname"><span class="pre">good_return_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.good_return_stmt" title="Link to this definition"></a></dt>
+<dd><p>Check whether a statement guarantees a return.</p>
+<section id="id11">
+<h4>Parameters<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>stmt<span class="classifier">Stmt</span></dt><dd><p>The statement to inspect.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h4>Returns<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the statement always returns, otherwise False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.has_return_stmt">
+<span class="sig-name descname"><span class="pre">has_return_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.has_return_stmt" title="Link to this definition"></a></dt>
+<dd><p>Check whether a statement contains a return anywhere inside it.</p>
+<p>This is used to reject return statements that appear outside of
+function bodies.</p>
+<section id="id13">
+<h4>Parameters<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>stmt<span class="classifier">Stmt</span></dt><dd><p>The statement to inspect.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h4>Returns<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if a return statement appears anywhere inside the
+statement, otherwise False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typecheck">
+<span class="sig-name descname"><span class="pre">typecheck</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typecheck" title="Link to this definition"></a></dt>
+<dd><p>Run typechecking on the full program.</p>
+<p>This method:
+- collects and validates all structs
+- collects and validates all functions
+- typechecks each function body
+- typechecks all top-level statements</p>
+<section id="id15">
+<h4>Raises<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised when any type rule is violated.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typecheck_func">
+<span class="sig-name descname"><span class="pre">typecheck_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typecheck_func" title="Link to this definition"></a></dt>
+<dd><p>Typecheck a single function definition.</p>
+<p>This method:
+- creates a variable environment for parameters
+- validates parameter declarations
+- typechecks every statement in the function body
+- checks that non-void functions have a guaranteed return</p>
+<section id="id16">
+<h4>Parameters<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>func<span class="classifier">FuncDef</span></dt><dd><p>The function definition to typecheck.</p>
+</dd>
+</dl>
+</section>
+<section id="id17">
+<h4>Raises<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised when the function contains invalid statements,
+duplicate parameters, or missing returns.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typecheck_lhs">
+<span class="sig-name descname"><span class="pre">typecheck_lhs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_hand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_variable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typecheck_lhs" title="Link to this definition"></a></dt>
+<dd><p>Typecheck a left-hand side expression.</p>
+<p>A left-hand side can be:
+- a variable
+- a struct field access
+- a dereferenced pointer target</p>
+<section id="id18">
+<h4>Parameters<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>left_hand</dt><dd><p>The left-hand side node or assignment statement.</p>
+</dd>
+<dt>env_variable<span class="classifier">dict</span></dt><dd><p>The current variable environment.</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h4>Returns<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Type</dt><dd><p>The type of the left-hand side.</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h4>Raises<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if the left-hand side is invalid or refers to an
+undeclared variable, unknown struct, or non-pointer dereference.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typecheck_stmt">
+<span class="sig-name descname"><span class="pre">typecheck_stmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typecheck_stmt" title="Link to this definition"></a></dt>
+<dd><p>Typecheck a statement.</p>
+<p>This method validates:
+- variable declarations
+- assignments
+- while statements
+- if statements
+- blocks
+- println statements
+- expression statements
+- return statements</p>
+<section id="id21">
+<h4>Parameters<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>stmt<span class="classifier">Stmt</span></dt><dd><p>The statement to typecheck.</p>
+</dd>
+<dt>var_env<span class="classifier">dict</span></dt><dd><p>The current variable environment.</p>
+</dd>
+<dt>return_type<span class="classifier">Type</span></dt><dd><p>The expected return type of the current function.</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h4>Raises<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised when a statement violates the language’s type rules.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typecheck_struct">
+<span class="sig-name descname"><span class="pre">typecheck_struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">struct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typecheck_struct" title="Link to this definition"></a></dt>
+<dd><p>Typecheck a single struct definition.</p>
+<p>Ensures that:
+- field names are unique
+- field types are valid and non-void</p>
+<section id="id23">
+<h4>Parameters<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>struct<span class="classifier">StructDef</span></dt><dd><p>The struct definition to check.</p>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h4>Raises<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised if a duplicate field is found or a field type is invalid.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.typechecker_exp">
+<span class="sig-name descname"><span class="pre">typechecker_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_variable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.typechecker_exp" title="Link to this definition"></a></dt>
+<dd><p>Typecheck an expression.</p>
+<p>Supported expressions include:
+- integer literals
+- boolean literals
+- null
+- left-hand side expressions
+- address-of expressions
+- dereference expressions
+- binary operator expressions
+- function calls</p>
+<section id="id25">
+<h4>Parameters<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The expression to typecheck.</p>
+</dd>
+<dt>env_variable<span class="classifier">dict</span></dt><dd><p>The current variable environment.</p>
+</dd>
+</dl>
+</section>
+<section id="id26">
+<h4>Returns<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Type</dt><dd><p>The type of the expression.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h4>Raises<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>Exception</dt><dd><p>Raised when an expression is not well-typed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.typechecker.typechecker.Typechecker.types_compatible">
+<span class="sig-name descname"><span class="pre">types_compatible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.typechecker.typechecker.Typechecker.types_compatible" title="Link to this definition"></a></dt>
+<dd><p>Check whether two types are compatible.</p>
+<p>This method allows:
+- exact type equality
+- null to be compatible with pointer types</p>
+<section id="id28">
+<h4>Parameters<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>t1<span class="classifier">Type</span></dt><dd><p>The first type.</p>
+</dd>
+<dt>t2<span class="classifier">Type</span></dt><dd><p>The second type.</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h4>Returns<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the types are compatible, otherwise False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-src.typechecker">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.typechecker" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="src.parser.html" class="btn btn-neutral float-left" title="src.parser package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Jose Bastidas Gonzalez, Joshua Guzman, Allen Guevarra.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

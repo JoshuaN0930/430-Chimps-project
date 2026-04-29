@@ -1,0 +1,13 @@
+Overview
+========
+
+**Compiler Name:** Chimps
+
+**Language Name:** Lowlang Structs
+
+**Course:** COMP 430
+
+**Target Language:** MIPS Assembly
+
+Chimps is a compiler for Lowlang Structs, a restricted, low-level programming
+language designed to compile directly to MIPS assembly.

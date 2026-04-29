@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src package &mdash; Chimps Compiler 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.lexer package" href="src.lexer.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Chimps Compiler
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">src package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html">src.lexer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html">src.parser package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html">src.typechecker package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Chimps Compiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">src package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.lexer.html">src.lexer package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.lexer.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.lexer.html#module-src.lexer.token">src.lexer.token module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.lexer.html#src.lexer.token.Keyword"><code class="docutils literal notranslate"><span class="pre">Keyword</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Keyword.WORDS"><code class="docutils literal notranslate"><span class="pre">Keyword.WORDS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.lexer.html#src.lexer.token.Symbol"><code class="docutils literal notranslate"><span class="pre">Symbol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Symbol.DOUBLE"><code class="docutils literal notranslate"><span class="pre">Symbol.DOUBLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Symbol.SINGLE"><code class="docutils literal notranslate"><span class="pre">Symbol.SINGLE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token"><code class="docutils literal notranslate"><span class="pre">Token</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token.line"><code class="docutils literal notranslate"><span class="pre">Token.line</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token.type"><code class="docutils literal notranslate"><span class="pre">Token.type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token.value"><code class="docutils literal notranslate"><span class="pre">Token.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType"><code class="docutils literal notranslate"><span class="pre">TokenType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.ADDRESS"><code class="docutils literal notranslate"><span class="pre">TokenType.ADDRESS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.ASSIGN"><code class="docutils literal notranslate"><span class="pre">TokenType.ASSIGN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.BLOCK"><code class="docutils literal notranslate"><span class="pre">TokenType.BLOCK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.CALL"><code class="docutils literal notranslate"><span class="pre">TokenType.CALL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.DOT"><code class="docutils literal notranslate"><span class="pre">TokenType.DOT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.Division"><code class="docutils literal notranslate"><span class="pre">TokenType.Division</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.EQ"><code class="docutils literal notranslate"><span class="pre">TokenType.EQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.FALSE"><code class="docutils literal notranslate"><span class="pre">TokenType.FALSE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.FUNC"><code class="docutils literal notranslate"><span class="pre">TokenType.FUNC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.IDENTIFIER"><code class="docutils literal notranslate"><span class="pre">TokenType.IDENTIFIER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.IF"><code class="docutils literal notranslate"><span class="pre">TokenType.IF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.INT"><code class="docutils literal notranslate"><span class="pre">TokenType.INT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.INTEGER"><code class="docutils literal notranslate"><span class="pre">TokenType.INTEGER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.LParen"><code class="docutils literal notranslate"><span class="pre">TokenType.LParen</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.LessThan"><code class="docutils literal notranslate"><span class="pre">TokenType.LessThan</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.Minus"><code class="docutils literal notranslate"><span class="pre">TokenType.Minus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.NEQ"><code class="docutils literal notranslate"><span class="pre">TokenType.NEQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.NULL"><code class="docutils literal notranslate"><span class="pre">TokenType.NULL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.PRINTLN"><code class="docutils literal notranslate"><span class="pre">TokenType.PRINTLN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.Plus"><code class="docutils literal notranslate"><span class="pre">TokenType.Plus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.RETURN"><code class="docutils literal notranslate"><span class="pre">TokenType.RETURN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.RParen"><code class="docutils literal notranslate"><span class="pre">TokenType.RParen</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.STMT"><code class="docutils literal notranslate"><span class="pre">TokenType.STMT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.STRUCT"><code class="docutils literal notranslate"><span class="pre">TokenType.STRUCT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.Star"><code class="docutils literal notranslate"><span class="pre">TokenType.Star</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.TRUE"><code class="docutils literal notranslate"><span class="pre">TokenType.TRUE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.VARDEC"><code class="docutils literal notranslate"><span class="pre">TokenType.VARDEC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.VOID"><code class="docutils literal notranslate"><span class="pre">TokenType.VOID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType.WHILE"><code class="docutils literal notranslate"><span class="pre">TokenType.WHILE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.lexer.html#module-src.lexer.tokenizer">src.lexer.tokenizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.lexer.html#src.lexer.tokenizer.tokenize"><code class="docutils literal notranslate"><span class="pre">tokenize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.lexer.html#module-src.lexer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.parser.html">src.parser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.parser.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.parser.html#module-src.parser.nodes">src.parser.nodes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.AddOp"><code class="docutils literal notranslate"><span class="pre">AddOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.AddressOfExp"><code class="docutils literal notranslate"><span class="pre">AddressOfExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.AddressOfExp.lhs"><code class="docutils literal notranslate"><span class="pre">AddressOfExp.lhs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.AssignStmt"><code class="docutils literal notranslate"><span class="pre">AssignStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.AssignStmt.exp"><code class="docutils literal notranslate"><span class="pre">AssignStmt.exp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.AssignStmt.lhs"><code class="docutils literal notranslate"><span class="pre">AssignStmt.lhs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.AssignToAddress"><code class="docutils literal notranslate"><span class="pre">AssignToAddress</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.AssignToAddress.lhs"><code class="docutils literal notranslate"><span class="pre">AssignToAddress.lhs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.BinaryOpExp"><code class="docutils literal notranslate"><span class="pre">BinaryOpExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.BinaryOpExp.first_exp"><code class="docutils literal notranslate"><span class="pre">BinaryOpExp.first_exp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.BinaryOpExp.op"><code class="docutils literal notranslate"><span class="pre">BinaryOpExp.op</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.BinaryOpExp.second_exp"><code class="docutils literal notranslate"><span class="pre">BinaryOpExp.second_exp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.BlockStmt"><code class="docutils literal notranslate"><span class="pre">BlockStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.BlockStmt.stmt"><code class="docutils literal notranslate"><span class="pre">BlockStmt.stmt</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.BoolType"><code class="docutils literal notranslate"><span class="pre">BoolType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.BooleanLiteralExp"><code class="docutils literal notranslate"><span class="pre">BooleanLiteralExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.BooleanLiteralExp.boolean"><code class="docutils literal notranslate"><span class="pre">BooleanLiteralExp.boolean</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.DerefExp"><code class="docutils literal notranslate"><span class="pre">DerefExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.DerefExp.exp"><code class="docutils literal notranslate"><span class="pre">DerefExp.exp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.DivideOp"><code class="docutils literal notranslate"><span class="pre">DivideOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.EqualOp"><code class="docutils literal notranslate"><span class="pre">EqualOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.ExpStmt"><code class="docutils literal notranslate"><span class="pre">ExpStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.ExpStmt.exp"><code class="docutils literal notranslate"><span class="pre">ExpStmt.exp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.FieldStructAssign"><code class="docutils literal notranslate"><span class="pre">FieldStructAssign</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FieldStructAssign.lhs"><code class="docutils literal notranslate"><span class="pre">FieldStructAssign.lhs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FieldStructAssign.var"><code class="docutils literal notranslate"><span class="pre">FieldStructAssign.var</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.FuncDef"><code class="docutils literal notranslate"><span class="pre">FuncDef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FuncDef.Rtype"><code class="docutils literal notranslate"><span class="pre">FuncDef.Rtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FuncDef.body"><code class="docutils literal notranslate"><span class="pre">FuncDef.body</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FuncDef.name"><code class="docutils literal notranslate"><span class="pre">FuncDef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FuncDef.params"><code class="docutils literal notranslate"><span class="pre">FuncDef.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.FunctionCallExp"><code class="docutils literal notranslate"><span class="pre">FunctionCallExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FunctionCallExp.exp"><code class="docutils literal notranslate"><span class="pre">FunctionCallExp.exp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.FunctionCallExp.func_name"><code class="docutils literal notranslate"><span class="pre">FunctionCallExp.func_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.IfStmt"><code class="docutils literal notranslate"><span class="pre">IfStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.IfStmt.else_stmt"><code class="docutils literal notranslate"><span class="pre">IfStmt.else_stmt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.IfStmt.exp"><code class="docutils literal notranslate"><span class="pre">IfStmt.exp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.IfStmt.then_stmt"><code class="docutils literal notranslate"><span class="pre">IfStmt.then_stmt</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntLiteralExp"><code class="docutils literal notranslate"><span class="pre">IntLiteralExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntLiteralExp.int_value"><code class="docutils literal notranslate"><span class="pre">IntLiteralExp.int_value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.IntType"><code class="docutils literal notranslate"><span class="pre">IntType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.LessThanOp"><code class="docutils literal notranslate"><span class="pre">LessThanOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.LhsExp"><code class="docutils literal notranslate"><span class="pre">LhsExp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.LhsExp.lhs"><code class="docutils literal notranslate"><span class="pre">LhsExp.lhs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.MinusOp"><code class="docutils literal notranslate"><span class="pre">MinusOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.MultiplyOp"><code class="docutils literal notranslate"><span class="pre">MultiplyOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.NotEqualOp"><code class="docutils literal notranslate"><span class="pre">NotEqualOp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.NullExp"><code class="docutils literal notranslate"><span class="pre">NullExp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.NullType"><code class="docutils literal notranslate"><span class="pre">NullType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.Param"><code class="docutils literal notranslate"><span class="pre">Param</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.Param.name"><code class="docutils literal notranslate"><span class="pre">Param.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.Param.type"><code class="docutils literal notranslate"><span class="pre">Param.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType"><code class="docutils literal notranslate"><span class="pre">PointerType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.PointerType.inner"><code class="docutils literal notranslate"><span class="pre">PointerType.inner</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.PrintlnStmt"><code class="docutils literal notranslate"><span class="pre">PrintlnStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.PrintlnStmt.exp"><code class="docutils literal notranslate"><span class="pre">PrintlnStmt.exp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.Program"><code class="docutils literal notranslate"><span class="pre">Program</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.Program.funcs"><code class="docutils literal notranslate"><span class="pre">Program.funcs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.Program.stmts"><code class="docutils literal notranslate"><span class="pre">Program.stmts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.Program.structs"><code class="docutils literal notranslate"><span class="pre">Program.structs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.ReturnStmt"><code class="docutils literal notranslate"><span class="pre">ReturnStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.ReturnStmt.exp"><code class="docutils literal notranslate"><span class="pre">ReturnStmt.exp</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.StructDef"><code class="docutils literal notranslate"><span class="pre">StructDef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.StructDef.name"><code class="docutils literal notranslate"><span class="pre">StructDef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.StructDef.params"><code class="docutils literal notranslate"><span class="pre">StructDef.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType"><code class="docutils literal notranslate"><span class="pre">StructType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.StructType.name"><code class="docutils literal notranslate"><span class="pre">StructType.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.VarAssign"><code class="docutils literal notranslate"><span class="pre">VarAssign</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.VarAssign.var"><code class="docutils literal notranslate"><span class="pre">VarAssign.var</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.VarDecStmt"><code class="docutils literal notranslate"><span class="pre">VarDecStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.VarDecStmt.name"><code class="docutils literal notranslate"><span class="pre">VarDecStmt.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.VarDecStmt.type"><code class="docutils literal notranslate"><span class="pre">VarDecStmt.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.VoidType"><code class="docutils literal notranslate"><span class="pre">VoidType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.nodes.WhileStmt"><code class="docutils literal notranslate"><span class="pre">WhileStmt</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.WhileStmt.exp"><code class="docutils literal notranslate"><span class="pre">WhileStmt.exp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.nodes.WhileStmt.stmt"><code class="docutils literal notranslate"><span class="pre">WhileStmt.stmt</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.parser.html#module-src.parser.parser">src.parser.parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser"><code class="docutils literal notranslate"><span class="pre">Parser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.at_end"><code class="docutils literal notranslate"><span class="pre">Parser.at_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.consume"><code class="docutils literal notranslate"><span class="pre">Parser.consume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_assign"><code class="docutils literal notranslate"><span class="pre">Parser.parse_assign()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_binary_exp"><code class="docutils literal notranslate"><span class="pre">Parser.parse_binary_exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_block"><code class="docutils literal notranslate"><span class="pre">Parser.parse_block()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_exp"><code class="docutils literal notranslate"><span class="pre">Parser.parse_exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_exp_stmt"><code class="docutils literal notranslate"><span class="pre">Parser.parse_exp_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_func"><code class="docutils literal notranslate"><span class="pre">Parser.parse_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_funcDefs"><code class="docutils literal notranslate"><span class="pre">Parser.parse_funcDefs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_if"><code class="docutils literal notranslate"><span class="pre">Parser.parse_if()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_lhs"><code class="docutils literal notranslate"><span class="pre">Parser.parse_lhs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_op"><code class="docutils literal notranslate"><span class="pre">Parser.parse_op()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_param"><code class="docutils literal notranslate"><span class="pre">Parser.parse_param()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_println"><code class="docutils literal notranslate"><span class="pre">Parser.parse_println()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_program"><code class="docutils literal notranslate"><span class="pre">Parser.parse_program()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_return"><code class="docutils literal notranslate"><span class="pre">Parser.parse_return()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_stmt"><code class="docutils literal notranslate"><span class="pre">Parser.parse_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_stmts"><code class="docutils literal notranslate"><span class="pre">Parser.parse_stmts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_struct"><code class="docutils literal notranslate"><span class="pre">Parser.parse_struct()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_structDefs"><code class="docutils literal notranslate"><span class="pre">Parser.parse_structDefs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_type"><code class="docutils literal notranslate"><span class="pre">Parser.parse_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_vardec"><code class="docutils literal notranslate"><span class="pre">Parser.parse_vardec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.parse_while"><code class="docutils literal notranslate"><span class="pre">Parser.parse_while()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.peek"><code class="docutils literal notranslate"><span class="pre">Parser.peek()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.parser.html#src.parser.parser.Parser.peek_keyword"><code class="docutils literal notranslate"><span class="pre">Parser.peek_keyword()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.parser.html#src.parser.parser.ParserError"><code class="docutils literal notranslate"><span class="pre">ParserError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.parser.html#module-src.parser">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.typechecker.html">src.typechecker package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.typechecker.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.typechecker.html#module-src.typechecker.typechecker">src.typechecker.typechecker module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker"><code class="docutils literal notranslate"><span class="pre">Typechecker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.check_nonvoid_type"><code class="docutils literal notranslate"><span class="pre">Typechecker.check_nonvoid_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.check_return_type"><code class="docutils literal notranslate"><span class="pre">Typechecker.check_return_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.check_type"><code class="docutils literal notranslate"><span class="pre">Typechecker.check_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.get_func"><code class="docutils literal notranslate"><span class="pre">Typechecker.get_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.get_struct"><code class="docutils literal notranslate"><span class="pre">Typechecker.get_struct()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.good_return_body"><code class="docutils literal notranslate"><span class="pre">Typechecker.good_return_body()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.good_return_stmt"><code class="docutils literal notranslate"><span class="pre">Typechecker.good_return_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.has_return_stmt"><code class="docutils literal notranslate"><span class="pre">Typechecker.has_return_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typecheck"><code class="docutils literal notranslate"><span class="pre">Typechecker.typecheck()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typecheck_func"><code class="docutils literal notranslate"><span class="pre">Typechecker.typecheck_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typecheck_lhs"><code class="docutils literal notranslate"><span class="pre">Typechecker.typecheck_lhs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typecheck_stmt"><code class="docutils literal notranslate"><span class="pre">Typechecker.typecheck_stmt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typecheck_struct"><code class="docutils literal notranslate"><span class="pre">Typechecker.typecheck_struct()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.typechecker_exp"><code class="docutils literal notranslate"><span class="pre">Typechecker.typechecker_exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html#src.typechecker.typechecker.Typechecker.types_compatible"><code class="docutils literal notranslate"><span class="pre">Typechecker.types_compatible()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.typechecker.html#module-src.typechecker">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.lexer.html" class="btn btn-neutral float-right" title="src.lexer package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Jose Bastidas Gonzalez, Joshua Guzman, Allen Guevarra.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

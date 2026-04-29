@@ -1,0 +1,29 @@
+src.lexer package
+=================
+
+Submodules
+----------
+
+src.lexer.token module
+----------------------
+
+.. automodule:: src.lexer.token
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+src.lexer.tokenizer module
+--------------------------
+
+.. automodule:: src.lexer.tokenizer
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: src.lexer
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,22 @@
+Chimps Documentation
+====================
+
+Welcome to the documentation for Chimps, a compiler for the Lowlang Structs
+programming language.
+
+This site contains language documentation and generated API documentation
+for the lexer, parser, AST node definitions, and typechecker.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   overview
+   features
+   syntax
+   compiler_phases
+   memory_model
+   build_and_run
+   limitations
+   lessons_learned
+   modules

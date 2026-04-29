@@ -1,0 +1,1213 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.parser package &mdash; Chimps Compiler 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.typechecker package" href="src.typechecker.html" />
+    <link rel="prev" title="src.lexer package" href="src.lexer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Chimps Compiler
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="src.lexer.html">src.lexer package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.parser package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.typechecker.html">src.typechecker package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Chimps Compiler</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+      <li class="breadcrumb-item active">src.parser package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.parser.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-parser-package">
+<h1>src.parser package<a class="headerlink" href="#src-parser-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.parser.nodes">
+<span id="src-parser-nodes-module"></span><h2>src.parser.nodes module<a class="headerlink" href="#module-src.parser.nodes" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.AddOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">AddOp</span></span><a class="headerlink" href="#src.parser.nodes.AddOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents addition operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.AddressOfExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">AddressOfExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.AddressOfExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an address-of expression.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>lhs<span class="classifier">Lhs</span></dt><dd><p>The left-hand side whose address is taken.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.AddressOfExp.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span><a class="headerlink" href="#src.parser.nodes.AddressOfExp.lhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.AssignStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">AssignStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.AssignStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an assignment statement.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>lhs<span class="classifier">Lhs</span></dt><dd><p>The assignment target.</p>
+</dd>
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The expression being assigned.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.AssignStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.AssignStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.AssignStmt.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span><a class="headerlink" href="#src.parser.nodes.AssignStmt.lhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.AssignToAddress">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">AssignToAddress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.AssignToAddress" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents assignment through an address or pointer target.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>lhs<span class="classifier">Lhs</span></dt><dd><p>The left-hand side being dereferenced or addressed.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.AssignToAddress.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span><a class="headerlink" href="#src.parser.nodes.AssignToAddress.lhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.BinaryOpExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">BinaryOpExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.AddOp" title="src.parser.nodes.AddOp"><span class="pre">AddOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MinusOp" title="src.parser.nodes.MinusOp"><span class="pre">MinusOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MultiplyOp" title="src.parser.nodes.MultiplyOp"><span class="pre">MultiplyOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DivideOp" title="src.parser.nodes.DivideOp"><span class="pre">DivideOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LessThanOp" title="src.parser.nodes.LessThanOp"><span class="pre">LessThanOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.EqualOp" title="src.parser.nodes.EqualOp"><span class="pre">EqualOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NotEqualOp" title="src.parser.nodes.NotEqualOp"><span class="pre">NotEqualOp</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.BinaryOpExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a binary operation expression.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>op<span class="classifier">Op</span></dt><dd><p>The operator applied to the expressions.</p>
+</dd>
+<dt>first_exp<span class="classifier">Exp</span></dt><dd><p>The left operand.</p>
+</dd>
+<dt>second_exp<span class="classifier">Exp</span></dt><dd><p>The right operand.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.BinaryOpExp.first_exp">
+<span class="sig-name descname"><span class="pre">first_exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.BinaryOpExp.first_exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.BinaryOpExp.op">
+<span class="sig-name descname"><span class="pre">op</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddOp" title="src.parser.nodes.AddOp"><span class="pre">AddOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MinusOp" title="src.parser.nodes.MinusOp"><span class="pre">MinusOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MultiplyOp" title="src.parser.nodes.MultiplyOp"><span class="pre">MultiplyOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DivideOp" title="src.parser.nodes.DivideOp"><span class="pre">DivideOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LessThanOp" title="src.parser.nodes.LessThanOp"><span class="pre">LessThanOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.EqualOp" title="src.parser.nodes.EqualOp"><span class="pre">EqualOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NotEqualOp" title="src.parser.nodes.NotEqualOp"><span class="pre">NotEqualOp</span></a></span><a class="headerlink" href="#src.parser.nodes.BinaryOpExp.op" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.BinaryOpExp.second_exp">
+<span class="sig-name descname"><span class="pre">second_exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.BinaryOpExp.second_exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.BlockStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">BlockStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.BlockStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a block of statements.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>stmt<span class="classifier">list[Stmt]</span></dt><dd><p>The list of statements inside the block.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.BlockStmt.stmt">
+<span class="sig-name descname"><span class="pre">stmt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.BlockStmt.stmt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.BoolType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">BoolType</span></span><a class="headerlink" href="#src.parser.nodes.BoolType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents boolean type.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.BooleanLiteralExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">BooleanLiteralExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boolean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.BooleanLiteralExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a boolean literal expression.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>boolean<span class="classifier">bool</span></dt><dd><p>The boolean value.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.BooleanLiteralExp.boolean">
+<span class="sig-name descname"><span class="pre">boolean</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#src.parser.nodes.BooleanLiteralExp.boolean" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.DerefExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">DerefExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.DerefExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a dereference expression.</p>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The expression being dereferenced.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.DerefExp.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.DerefExp.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.DivideOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">DivideOp</span></span><a class="headerlink" href="#src.parser.nodes.DivideOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents division operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.EqualOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">EqualOp</span></span><a class="headerlink" href="#src.parser.nodes.EqualOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents equality operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.ExpStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">ExpStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.ExpStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a statement consisting of a single expression.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The expression used as a statement.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.ExpStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.ExpStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.FieldStructAssign">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">FieldStructAssign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.FieldStructAssign" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents assignment to a struct field.</p>
+<section id="id8">
+<h3>Parameters<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>lhs<span class="classifier">Lhs</span></dt><dd><p>The left-hand side expression producing the struct value.</p>
+</dd>
+<dt>var<span class="classifier">str</span></dt><dd><p>The field name being assigned.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FieldStructAssign.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span><a class="headerlink" href="#src.parser.nodes.FieldStructAssign.lhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FieldStructAssign.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.FieldStructAssign.var" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.FuncDef">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">FuncDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.Param" title="src.parser.nodes.Param"><span class="pre">Param</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.FuncDef" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a function definition.</p>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>The function name.</p>
+</dd>
+<dt>params<span class="classifier">list[Param]</span></dt><dd><p>The function parameters.</p>
+</dd>
+<dt>Rtype<span class="classifier">Type</span></dt><dd><p>The return type of the function.</p>
+</dd>
+<dt>body<span class="classifier">list[Stmt]</span></dt><dd><p>The list of statements in the function body.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FuncDef.Rtype">
+<span class="sig-name descname"><span class="pre">Rtype</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span><a class="headerlink" href="#src.parser.nodes.FuncDef.Rtype" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FuncDef.body">
+<span class="sig-name descname"><span class="pre">body</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.FuncDef.body" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FuncDef.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.FuncDef.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FuncDef.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.Param" title="src.parser.nodes.Param"><span class="pre">Param</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.FuncDef.params" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.FunctionCallExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">FunctionCallExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.FunctionCallExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a function call expression.</p>
+<section id="id10">
+<h3>Parameters<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>func_name<span class="classifier">str</span></dt><dd><p>The name of the function being called.</p>
+</dd>
+<dt>exp<span class="classifier">list[Exp]</span></dt><dd><p>The list of argument expressions.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FunctionCallExp.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.FunctionCallExp.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.FunctionCallExp.func_name">
+<span class="sig-name descname"><span class="pre">func_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.FunctionCallExp.func_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.IfStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">IfStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">then_stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">else_stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.IfStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an if statement.</p>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The condition expression.</p>
+</dd>
+<dt>then_stmt<span class="classifier">Stmt</span></dt><dd><p>The statement executed when the condition is true.</p>
+</dd>
+<dt>else_stmt<span class="classifier">Stmt | None</span></dt><dd><p>The optional statement executed when the condition is false.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.IfStmt.else_stmt">
+<span class="sig-name descname"><span class="pre">else_stmt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#src.parser.nodes.IfStmt.else_stmt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.IfStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.IfStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.IfStmt.then_stmt">
+<span class="sig-name descname"><span class="pre">then_stmt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a></span><a class="headerlink" href="#src.parser.nodes.IfStmt.then_stmt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.IntLiteralExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">IntLiteralExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.IntLiteralExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an integer literal expression.</p>
+<section id="id12">
+<h3>Parameters<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>int_value<span class="classifier">int</span></dt><dd><p>The integer value.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.IntLiteralExp.int_value">
+<span class="sig-name descname"><span class="pre">int_value</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.parser.nodes.IntLiteralExp.int_value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.IntType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">IntType</span></span><a class="headerlink" href="#src.parser.nodes.IntType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents integer type.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.LessThanOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">LessThanOp</span></span><a class="headerlink" href="#src.parser.nodes.LessThanOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents less-than operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.LhsExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">LhsExp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lhs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.LhsExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an expression built from a left-hand side value.</p>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>lhs<span class="classifier">Lhs</span></dt><dd><p>The left-hand side value used as an expression.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.LhsExp.lhs">
+<span class="sig-name descname"><span class="pre">lhs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span><a class="headerlink" href="#src.parser.nodes.LhsExp.lhs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.MinusOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">MinusOp</span></span><a class="headerlink" href="#src.parser.nodes.MinusOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents subtraction operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.MultiplyOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">MultiplyOp</span></span><a class="headerlink" href="#src.parser.nodes.MultiplyOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents multiplication operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.NotEqualOp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">NotEqualOp</span></span><a class="headerlink" href="#src.parser.nodes.NotEqualOp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents not-equal operator.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.NullExp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">NullExp</span></span><a class="headerlink" href="#src.parser.nodes.NullExp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a null expression.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.NullType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">NullType</span></span><a class="headerlink" href="#src.parser.nodes.NullType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents null type.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.Param">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">Param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.Param" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a parameter declaration.</p>
+<section id="id14">
+<h3>Parameters<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>type<span class="classifier">Type</span></dt><dd><p>The parameter type.</p>
+</dd>
+<dt>name<span class="classifier">str</span></dt><dd><p>The parameter name.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.Param.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.Param.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.Param.type">
+<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span><a class="headerlink" href="#src.parser.nodes.Param.type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.PointerType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">PointerType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.PointerType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents pointer type.</p>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>inner<span class="classifier">Type</span></dt><dd><p>The type pointed to by this pointer.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.PointerType.inner">
+<span class="sig-name descname"><span class="pre">inner</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span><a class="headerlink" href="#src.parser.nodes.PointerType.inner" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.PrintlnStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">PrintlnStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.PrintlnStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a println statement.</p>
+<section id="id16">
+<h3>Parameters<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The expression to print.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.PrintlnStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.PrintlnStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.Program">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">Program</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.StructDef" title="src.parser.nodes.StructDef"><span class="pre">StructDef</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">funcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.FuncDef" title="src.parser.nodes.FuncDef"><span class="pre">FuncDef</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stmts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.Program" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the root of the program.</p>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>structs<span class="classifier">list[StructDef]</span></dt><dd><p>The list of struct definitions.</p>
+</dd>
+<dt>funcs<span class="classifier">list[FuncDef]</span></dt><dd><p>The list of function definitions.</p>
+</dd>
+<dt>stmts<span class="classifier">list[Stmt]</span></dt><dd><p>The top-level statements in the program.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.Program.funcs">
+<span class="sig-name descname"><span class="pre">funcs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.FuncDef" title="src.parser.nodes.FuncDef"><span class="pre">FuncDef</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.Program.funcs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.Program.stmts">
+<span class="sig-name descname"><span class="pre">stmts</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.Program.stmts" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.Program.structs">
+<span class="sig-name descname"><span class="pre">structs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.StructDef" title="src.parser.nodes.StructDef"><span class="pre">StructDef</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.Program.structs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.ReturnStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">ReturnStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.ReturnStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a return statement.</p>
+<section id="id18">
+<h3>Parameters<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp | None</span></dt><dd><p>The optional expression returned by the statement.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.ReturnStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#src.parser.nodes.ReturnStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.StructDef">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">StructDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.Param" title="src.parser.nodes.Param"><span class="pre">Param</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.StructDef" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a struct definition.</p>
+<section id="id19">
+<h3>Parameters<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>The name of the struct.</p>
+</dd>
+<dt>params<span class="classifier">list[Param]</span></dt><dd><p>The fields or parameters of the struct.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.StructDef.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.StructDef.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.StructDef.params">
+<span class="sig-name descname"><span class="pre">params</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.Param" title="src.parser.nodes.Param"><span class="pre">Param</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.parser.nodes.StructDef.params" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.StructType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">StructType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.StructType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents struct type.</p>
+<section id="id20">
+<h3>Parameters<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>The name of the struct type.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.StructType.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.StructType.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.VarAssign">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">VarAssign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.VarAssign" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents assignment to a variable.</p>
+<section id="id21">
+<h3>Parameters<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>var<span class="classifier">str</span></dt><dd><p>The variable name.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.VarAssign.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.VarAssign.var" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.VarDecStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">VarDecStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.VarDecStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a variable declaration statement.</p>
+<section id="id22">
+<h3>Parameters<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>type<span class="classifier">Type</span></dt><dd><p>The declared variable type.</p>
+</dd>
+<dt>name<span class="classifier">str</span></dt><dd><p>The declared variable name.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.VarDecStmt.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.parser.nodes.VarDecStmt.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.VarDecStmt.type">
+<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span><a class="headerlink" href="#src.parser.nodes.VarDecStmt.type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.VoidType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">VoidType</span></span><a class="headerlink" href="#src.parser.nodes.VoidType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents void type.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.nodes.WhileStmt">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.nodes.</span></span><span class="sig-name descname"><span class="pre">WhileStmt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.nodes.WhileStmt" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a while statement.</p>
+<section id="id23">
+<h3>Parameters<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>exp<span class="classifier">Exp</span></dt><dd><p>The loop condition.</p>
+</dd>
+<dt>stmt<span class="classifier">Stmt</span></dt><dd><p>The statement executed while the condition is true.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.WhileStmt.exp">
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span><a class="headerlink" href="#src.parser.nodes.WhileStmt.exp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.parser.nodes.WhileStmt.stmt">
+<span class="sig-name descname"><span class="pre">stmt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a></span><a class="headerlink" href="#src.parser.nodes.WhileStmt.stmt" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-src.parser.parser">
+<span id="src-parser-parser-module"></span><h2>src.parser.parser module<a class="headerlink" href="#module-src.parser.parser" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.parser.parser.Parser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.parser.</span></span><span class="sig-name descname"><span class="pre">Parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.lexer.html#src.lexer.token.Token" title="src.lexer.token.Token"><span class="pre">Token</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.Parser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parses a list of tokens into the program’s abstract syntax tree.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.at_end">
+<span class="sig-name descname"><span class="pre">at_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.parser.parser.Parser.at_end" title="Link to this definition"></a></dt>
+<dd><p>Check whether all tokens have been consumed.</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the parser is at the end of the token list, otherwise False.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.consume">
+<span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.lexer.html#src.lexer.token.TokenType" title="src.lexer.token.TokenType"><span class="pre">TokenType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token" title="src.lexer.token.Token"><span class="pre">Token</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.consume" title="Link to this definition"></a></dt>
+<dd><p>Consume the current token and optionally check its type.</p>
+<section id="id24">
+<h3>Parameters<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>expected<span class="classifier">TokenType, optional</span></dt><dd><p>The expected token type.</p>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3>Returns<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Token</dt><dd><p>The consumed token, or None if the expected type does not match.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_assign">
+<span class="sig-name descname"><span class="pre">parse_assign</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_assign" title="Link to this definition"></a></dt>
+<dd><p>Parse an assignment statement.</p>
+<section id="id26">
+<h3>Returns<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>AssignStmt</dt><dd><p>The parsed assignment statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_binary_exp">
+<span class="sig-name descname"><span class="pre">parse_binary_exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_binary_exp" title="Link to this definition"></a></dt>
+<dd><p>Parse a parenthesized binary expression.</p>
+<section id="id27">
+<h3>Returns<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>BinaryOpExp</dt><dd><p>The parsed binary expression node.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_block">
+<span class="sig-name descname"><span class="pre">parse_block</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_block" title="Link to this definition"></a></dt>
+<dd><p>Parse a block statement.</p>
+<section id="id28">
+<h3>Returns<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>BlockStmt</dt><dd><p>The parsed block statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_exp">
+<span class="sig-name descname"><span class="pre">parse_exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.IntLiteralExp" title="src.parser.nodes.IntLiteralExp"><span class="pre">IntLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BooleanLiteralExp" title="src.parser.nodes.BooleanLiteralExp"><span class="pre">BooleanLiteralExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LhsExp" title="src.parser.nodes.LhsExp"><span class="pre">LhsExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullExp" title="src.parser.nodes.NullExp"><span class="pre">NullExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AddressOfExp" title="src.parser.nodes.AddressOfExp"><span class="pre">AddressOfExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DerefExp" title="src.parser.nodes.DerefExp"><span class="pre">DerefExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BinaryOpExp" title="src.parser.nodes.BinaryOpExp"><span class="pre">BinaryOpExp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FunctionCallExp" title="src.parser.nodes.FunctionCallExp"><span class="pre">FunctionCallExp</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_exp" title="Link to this definition"></a></dt>
+<dd><p>Parse an expression.</p>
+<section id="id29">
+<h3>Returns<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Exp</dt><dd><p>The parsed expression node.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h3>Raises<a class="headerlink" href="#raises" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the token sequence does not form a valid expression.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_exp_stmt">
+<span class="sig-name descname"><span class="pre">parse_exp_stmt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_exp_stmt" title="Link to this definition"></a></dt>
+<dd><p>Parse an expression statement.</p>
+<section id="id30">
+<h3>Returns<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ExpStmt</dt><dd><p>The parsed expression statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_func">
+<span class="sig-name descname"><span class="pre">parse_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.Parser.parse_func" title="Link to this definition"></a></dt>
+<dd><p>Parse a function definition.</p>
+<section id="id31">
+<h3>Returns<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>FuncDef</dt><dd><p>The parsed function definition.</p>
+</dd>
+</dl>
+</section>
+<section id="id32">
+<h3>Raises<a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the function definition is malformed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_funcDefs">
+<span class="sig-name descname"><span class="pre">parse_funcDefs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.FuncDef" title="src.parser.nodes.FuncDef"><span class="pre">FuncDef</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_funcDefs" title="Link to this definition"></a></dt>
+<dd><p>Parse all function definitions after struct definitions.</p>
+<section id="id33">
+<h3>Returns<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>list[FuncDef]</dt><dd><p>A list of parsed function definitions.</p>
+</dd>
+</dl>
+</section>
+<section id="id34">
+<h3>Raises<a class="headerlink" href="#id34" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when a struct definition appears after functions begin.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_if">
+<span class="sig-name descname"><span class="pre">parse_if</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_if" title="Link to this definition"></a></dt>
+<dd><p>Parse an if statement.</p>
+<section id="id35">
+<h3>Returns<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>IfStmt</dt><dd><p>The parsed if statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_lhs">
+<span class="sig-name descname"><span class="pre">parse_lhs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.VarAssign" title="src.parser.nodes.VarAssign"><span class="pre">VarAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.FieldStructAssign" title="src.parser.nodes.FieldStructAssign"><span class="pre">FieldStructAssign</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignToAddress" title="src.parser.nodes.AssignToAddress"><span class="pre">AssignToAddress</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_lhs" title="Link to this definition"></a></dt>
+<dd><p>Parse a left-hand side expression.</p>
+<section id="id36">
+<h3>Returns<a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Lhs</dt><dd><p>The parsed left-hand side node.</p>
+</dd>
+</dl>
+</section>
+<section id="id37">
+<h3>Raises<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the token sequence does not form a valid left-hand side.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_op">
+<span class="sig-name descname"><span class="pre">parse_op</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.AddOp" title="src.parser.nodes.AddOp"><span class="pre">AddOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MinusOp" title="src.parser.nodes.MinusOp"><span class="pre">MinusOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.MultiplyOp" title="src.parser.nodes.MultiplyOp"><span class="pre">MultiplyOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.DivideOp" title="src.parser.nodes.DivideOp"><span class="pre">DivideOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.LessThanOp" title="src.parser.nodes.LessThanOp"><span class="pre">LessThanOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.EqualOp" title="src.parser.nodes.EqualOp"><span class="pre">EqualOp</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NotEqualOp" title="src.parser.nodes.NotEqualOp"><span class="pre">NotEqualOp</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_op" title="Link to this definition"></a></dt>
+<dd><p>Parse an operator.</p>
+<section id="id38">
+<h3>Returns<a class="headerlink" href="#id38" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Op</dt><dd><p>The parsed operator node.</p>
+</dd>
+</dl>
+</section>
+<section id="id39">
+<h3>Raises<a class="headerlink" href="#id39" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the current token is not a valid operator.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_param">
+<span class="sig-name descname"><span class="pre">parse_param</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.Parser.parse_param" title="Link to this definition"></a></dt>
+<dd><p>Parse a parameter declaration.</p>
+<section id="id40">
+<h3>Returns<a class="headerlink" href="#id40" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Param</dt><dd><p>The parsed parameter node.</p>
+</dd>
+</dl>
+</section>
+<section id="id41">
+<h3>Raises<a class="headerlink" href="#id41" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the parameter syntax is invalid.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_println">
+<span class="sig-name descname"><span class="pre">parse_println</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_println" title="Link to this definition"></a></dt>
+<dd><p>Parse a println statement.</p>
+<section id="id42">
+<h3>Returns<a class="headerlink" href="#id42" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>PrintlnStmt</dt><dd><p>The parsed println statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_program">
+<span class="sig-name descname"><span class="pre">parse_program</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.Program" title="src.parser.nodes.Program"><span class="pre">Program</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_program" title="Link to this definition"></a></dt>
+<dd><p>Parse the full program.</p>
+<section id="id43">
+<h3>Returns<a class="headerlink" href="#id43" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Program</dt><dd><p>The parsed program root node.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_return">
+<span class="sig-name descname"><span class="pre">parse_return</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_return" title="Link to this definition"></a></dt>
+<dd><p>Parse a return statement.</p>
+<section id="id44">
+<h3>Returns<a class="headerlink" href="#id44" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ReturnStmt</dt><dd><p>The parsed return statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_stmt">
+<span class="sig-name descname"><span class="pre">parse_stmt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.Parser.parse_stmt" title="Link to this definition"></a></dt>
+<dd><p>Parse a statement.</p>
+<section id="id45">
+<h3>Returns<a class="headerlink" href="#id45" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Stmt</dt><dd><p>The parsed statement node.</p>
+</dd>
+</dl>
+</section>
+<section id="id46">
+<h3>Raises<a class="headerlink" href="#id46" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the token sequence does not form a valid statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_stmts">
+<span class="sig-name descname"><span class="pre">parse_stmts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.AssignStmt" title="src.parser.nodes.AssignStmt"><span class="pre">AssignStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.IfStmt" title="src.parser.nodes.IfStmt"><span class="pre">IfStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ReturnStmt" title="src.parser.nodes.ReturnStmt"><span class="pre">ReturnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BlockStmt" title="src.parser.nodes.BlockStmt"><span class="pre">BlockStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PrintlnStmt" title="src.parser.nodes.PrintlnStmt"><span class="pre">PrintlnStmt</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.ExpStmt" title="src.parser.nodes.ExpStmt"><span class="pre">ExpStmt</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_stmts" title="Link to this definition"></a></dt>
+<dd><p>Parse all top-level statements remaining in the program.</p>
+<section id="id47">
+<h3>Returns<a class="headerlink" href="#id47" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>list[Stmt]</dt><dd><p>A list of parsed statements.</p>
+</dd>
+</dl>
+</section>
+<section id="id48">
+<h3>Raises<a class="headerlink" href="#id48" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when struct or function definitions appear after statements begin.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_struct">
+<span class="sig-name descname"><span class="pre">parse_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.Parser.parse_struct" title="Link to this definition"></a></dt>
+<dd><p>Parse a struct definition.</p>
+<section id="id49">
+<h3>Returns<a class="headerlink" href="#id49" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>StructDef</dt><dd><p>The parsed struct definition.</p>
+</dd>
+</dl>
+</section>
+<section id="id50">
+<h3>Raises<a class="headerlink" href="#id50" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the struct definition is malformed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_structDefs">
+<span class="sig-name descname"><span class="pre">parse_structDefs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.parser.nodes.StructDef" title="src.parser.nodes.StructDef"><span class="pre">StructDef</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_structDefs" title="Link to this definition"></a></dt>
+<dd><p>Parse all struct definitions at the start of the program.</p>
+<section id="id51">
+<h3>Returns<a class="headerlink" href="#id51" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>list[StructDef]</dt><dd><p>A list of parsed struct definitions.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_type">
+<span class="sig-name descname"><span class="pre">parse_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.IntType" title="src.parser.nodes.IntType"><span class="pre">IntType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.VoidType" title="src.parser.nodes.VoidType"><span class="pre">VoidType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.StructType" title="src.parser.nodes.StructType"><span class="pre">StructType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.PointerType" title="src.parser.nodes.PointerType"><span class="pre">PointerType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.BoolType" title="src.parser.nodes.BoolType"><span class="pre">BoolType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#src.parser.nodes.NullType" title="src.parser.nodes.NullType"><span class="pre">NullType</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_type" title="Link to this definition"></a></dt>
+<dd><p>Parse a type.</p>
+<section id="id52">
+<h3>Returns<a class="headerlink" href="#id52" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Type</dt><dd><p>The parsed type node.</p>
+</dd>
+</dl>
+</section>
+<section id="id53">
+<h3>Raises<a class="headerlink" href="#id53" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>ParserError</dt><dd><p>Raised when the current token does not form a valid type.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_vardec">
+<span class="sig-name descname"><span class="pre">parse_vardec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.VarDecStmt" title="src.parser.nodes.VarDecStmt"><span class="pre">VarDecStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_vardec" title="Link to this definition"></a></dt>
+<dd><p>Parse a variable declaration statement.</p>
+<section id="id54">
+<h3>Returns<a class="headerlink" href="#id54" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>VarDecStmt</dt><dd><p>The parsed variable declaration statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.parse_while">
+<span class="sig-name descname"><span class="pre">parse_while</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.parser.nodes.WhileStmt" title="src.parser.nodes.WhileStmt"><span class="pre">WhileStmt</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.parse_while" title="Link to this definition"></a></dt>
+<dd><p>Parse a while statement.</p>
+<section id="id55">
+<h3>Returns<a class="headerlink" href="#id55" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>WhileStmt</dt><dd><p>The parsed while statement.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.peek">
+<span class="sig-name descname"><span class="pre">peek</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token" title="src.lexer.token.Token"><span class="pre">Token</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.peek" title="Link to this definition"></a></dt>
+<dd><p>Return the current token without consuming it.</p>
+<section id="id56">
+<h3>Returns<a class="headerlink" href="#id56" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Token</dt><dd><p>The current token.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.parser.parser.Parser.peek_keyword">
+<span class="sig-name descname"><span class="pre">peek_keyword</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.lexer.html#src.lexer.token.Token" title="src.lexer.token.Token"><span class="pre">Token</span></a></span></span><a class="headerlink" href="#src.parser.parser.Parser.peek_keyword" title="Link to this definition"></a></dt>
+<dd><p>Return the type of the next token.</p>
+<section id="id57">
+<h3>Returns<a class="headerlink" href="#id57" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>Token</dt><dd><p>The type of the next token.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="src.parser.parser.ParserError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.parser.parser.</span></span><span class="sig-name descname"><span class="pre">ParserError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.parser.parser.ParserError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Represents a parsing error with source line information.</p>
+<section id="id58">
+<h3>Parameters<a class="headerlink" href="#id58" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>message<span class="classifier">str</span></dt><dd><p>The error message.</p>
+</dd>
+<dt>line<span class="classifier">int</span></dt><dd><p>The line where the parsing error occurred.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-src.parser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.parser" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="src.lexer.html" class="btn btn-neutral float-left" title="src.lexer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.typechecker.html" class="btn btn-neutral float-right" title="src.typechecker package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Jose Bastidas Gonzalez, Joshua Guzman, Allen Guevarra.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

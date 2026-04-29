@@ -1,0 +1,29 @@
+src.parser package
+==================
+
+Submodules
+----------
+
+src.parser.nodes module
+-----------------------
+
+.. automodule:: src.parser.nodes
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+src.parser.parser module
+------------------------
+
+.. automodule:: src.parser.parser
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: src.parser
+   :members:
+   :show-inheritance:
+   :undoc-members:
